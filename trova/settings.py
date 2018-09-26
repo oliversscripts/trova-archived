@@ -66,6 +66,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'trova.urls'
 
+# Session config
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -116,6 +119,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'apps.User'
 
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = 'apps:index'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
