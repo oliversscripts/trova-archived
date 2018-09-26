@@ -95,30 +95,32 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Setup<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="#">General</a>
-                                </li>
-                                <li>
-                                    <a href="#">Plex</a>
-                                </li>
-                                <li>
-                                    <a href="#">Sonarr</a>
-                                </li>
-                                <li>
-                                    <a href="#">Radarr</a>
-                                </li>
-                                <li>
-                                    <a href="#">Lidarr</a>
-                                </li>
-                                <li>
-                                    <a href="#">Lazy Library</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
+                        {% if user.is_superuser %}
+                            <li>
+                                <a href="#"><i class="fa fa-wrench fa-fw"></i> Setup<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="#">General</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Plex</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Sonarr</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Radarr</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Lidarr</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Lazy Library</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                        {% endif %}
                         <!-- /.nav-top-level -->
                     </ul>
                 </div>
