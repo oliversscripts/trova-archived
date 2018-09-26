@@ -1,0 +1,8 @@
+{
+    "SECRET_KEY" : "Your Key Here",
+    "DBNAME" : "MySQL Database Name",
+    "DBUSER" : "MySQL User ",
+    "DBPASS" : "MySQL Password",
+    "DBHOST" : "MySQL Host",
+    "DBPORT" : "MySQL Port"
+}
