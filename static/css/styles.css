@@ -1,4 +1,13 @@
 .container-fluid hr {
-    margin-top: 5px;
+    margin-top:5px;
     margin-bottom: 20px;
+}
+
+.no-horizontal-padding { 
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.container-fluid button {
+    margin-top: 15px;
 }
