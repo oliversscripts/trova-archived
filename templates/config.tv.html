@@ -9,8 +9,8 @@ TV Setup
 {% endblock %}
 
 {% block page_buttons %}
-<button type="reset" class="btn btn-danger page-button" form="config.tv">Cancel</button>
-<button type="submit" class="btn btn-success page-button" form="config.tv">Save</button>
+<button type="reset" class="btn btn-danger" form="config.tv">Cancel</button>
+<button type="submit" class="btn btn-success" form="config.tv">Save</button>
 {% endblock %}
 
 {% block page_content %}
@@ -49,48 +49,64 @@ TV Setup
                     <h3 class="panel-title">Suggestions</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="form-group">
-                        <label>{{ form.suggestions_enabled.label_tag }}</label>
-                        {{ form.suggestions_enabled|add_class:'form-control' }}
-                    </div>
-                    <div class="form-group">
-                        <label>{{ form.suggestions_trending_enabled.label_tag }}</label>
-                        {{ form.suggestions_trending_enabled|add_class:'form-control' }}
-                    </div>
-                    <div class="form-group">
-                        <label>{{ form.suggestions_popular_enabled.label_tag }}</label>
-                        {{ form.suggestions_popular_enabled|add_class:'form-control' }}
-                    </div>
-                    <div class="form-group">
-                        <label>{{ form.suggestions_anticipated_enabled.label_tag }}</label>
-                        {{ form.suggestions_anticipated_enabled|add_class:'form-control' }}
-                    </div>
+                    <fieldset id="suggestions-fieldset">
+                        <div class="form-group">
+                            <label>{{ form.suggestions_trending_enabled.label_tag }}</label>
+                            {{ form.suggestions_trending_enabled|add_class:'form-control' }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.suggestions_popular_enabled.label_tag }}</label>
+                            {{ form.suggestions_popular_enabled|add_class:'form-control' }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.suggestions_anticipated_enabled.label_tag }}</label>
+                            {{ form.suggestions_anticipated_enabled|add_class:'form-control' }}
+                        </div>
+                    </fieldset>
                 </div>
             </div>
         </div>
         
         <div class="col-md-4">
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="api-credentials">
                 <div class="panel-heading">
-                    <h3 class="panel-title">APIs</h3>
+                    <h3 class="panel-title">API Credentials</h3>
                 </div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label>{{ form.api_key_trakt.label_tag }}</label>
-                        {{ form.api_key_trakt|add_class:'form-control' }}
+                <fieldset id="api-credentials-fieldset">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>{{ form.api_key_trakt.label_tag }}</label>
+                            {{ form.api_key_trakt|add_class:'form-control' }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.api_key_trakt.label_tag }}</label>
+                            {{ form.api_key_tvdb|add_class:'form-control' }}
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>{{ form.api_key_trakt.label_tag }}</label>
-                        {{ form.api_key_tvdb|add_class:'form-control' }}
-                    </div>
-                </div>
+                </fieldset>
             </div>
         </div>
-
+        
         <div class="col-md-4">
         </div>
     </div>
     
-    
 </form>
+<script>
+    if (!$('#id_enabled').is(":checked")) {
+        $('#suggestions-fieldset').prop('disabled', true);
+        $('#api-credentials-fieldset').prop('disabled', true);
+    }
+
+    $("#id_enabled").change(function() {
+        if (!$('#id_enabled').is(":checked")) {
+            $('#suggestions-fieldset').prop('disabled', true);
+            $('#api-credentials-fieldset').prop('disabled', true);
+        } else {
+            $('#suggestions-fieldset').prop('disabled', false);
+            $('#api-credentials-fieldset').prop('disabled', false);
+        }
+    });
+    
+</script>
 {% endblock %}
