@@ -6,7 +6,7 @@ app_name = 'apps'
 urlpatterns = [
     url(r'^$', views.Index, name='index'),
     path('apps/', views.Home, name='home'),
-    path('config_tv/', views.ConfigTv, name='config_tv'),
+    path('configure_tv/', views.ConfigureTv, name='configure_tv'),
     path('tv_search/', views.TvSearch, name='tv_search'),
     
 ]
