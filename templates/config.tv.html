@@ -15,20 +15,16 @@ TV Setup
 {% block page_content %}
 {% load widget_tweaks %}
 <form method="post" novalidate>
+    {% csrf_token %}
+    {% for hidden in form.hidden_fields %}
+    {{ hidden }}
+    {% endfor %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">General</h3>
         </div>
         <div class="panel-body">
-            
-            {% csrf_token %}
-            
-            {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
-            
             {% for field in form.visible_fields %}
-            
             <div class="form-group">
                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                 {{ field|add_class:'form-control' }}
@@ -38,9 +34,7 @@ TV Setup
                 {% endfor %}
             </div>
             {% endfor %}
-            
             <button type="submit" class="btn btn-primary">Submit</button>
-            
         </div>
     </div>
 </form>
