@@ -5,5 +5,5 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def index(request):
     context = {}
-    return render(request, 'default.content.html', context=context)
+    return render(request, 'home.default.html', context=context)
 
