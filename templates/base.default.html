@@ -41,8 +41,9 @@
                         <li>
                             <a href="{% url 'apps:index' %}"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
+                        <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-tv fa-fw"></i> TV<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-tv fa-fw"></i> Books<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="#">Search</a>
@@ -84,7 +85,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-book fa-fw"></i> Books<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-book fa-fw"></i> TV<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="#">Search</a>
@@ -96,11 +97,12 @@
                             <!-- /.nav-second-level -->
                         </li>
                         {% if user.is_superuser %}
+                            <li class="divider"></li>
                             <li>
                                 <a href="#"><i class="fa fa-wrench fa-fw"></i> Setup<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#">General</a>
+                                        <a href="#">Configuration</a>
                                     </li>
                                     <li>
                                         <a href="#">Users</a>
@@ -109,16 +111,16 @@
                                         <a href="#">Plex</a>
                                     </li>
                                     <li>
-                                        <a href="#">Sonarr</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Radarr</a>
+                                        <a href="#">LazyLibrarian</a>
                                     </li>
                                     <li>
                                         <a href="#">Lidarr</a>
                                     </li>
                                     <li>
-                                        <a href="#">LazyLibrarian</a>
+                                        <a href="#">Radarr</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Sonarr</a>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
