@@ -1,7 +1,7 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, modelformset_factory
 from apps.models import TvConfig
 
 class TvConfigForm(ModelForm):
     class Meta:
         model = TvConfig
-        fields = ['enabled','trakt_api_key']
+        fields = '__all__'
