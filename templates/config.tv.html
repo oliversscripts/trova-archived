@@ -9,33 +9,88 @@ TV Setup
 {% endblock %}
 
 {% block page_buttons %}
-
+<button type="reset" class="btn btn-danger page-button" form="config.tv">Cancel</button>
+<button type="submit" class="btn btn-success page-button" form="config.tv">Save</button>
 {% endblock %}
 
 {% block page_content %}
 {% load widget_tweaks %}
-<form method="post" novalidate>
+
+<form method="post" id="config.tv" novalidate>
     {% csrf_token %}
+    
     {% for hidden in form.hidden_fields %}
     {{ hidden }}
     {% endfor %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">General</h3>
-        </div>
-        <div class="panel-body">
-            {% for field in form.visible_fields %}
-            <div class="form-group">
-                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field|add_class:'form-control' }}
-                
-                {% for error in field.errors %}
-                <span class="help-block">{{ error }}</span>
-                {% endfor %}
+    
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">
+        {% for error in form.non_field_errors %}
+        {{ error }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">General</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>{{ form.enabled.label_tag }}</label>
+                        {{ form.enabled|add_class:'form-control' }}
+                    </div>
+                </div>
             </div>
-            {% endfor %}
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Suggestions</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>{{ form.suggestions_enabled.label_tag }}</label>
+                        {{ form.suggestions_enabled|add_class:'form-control' }}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.suggestions_trending_enabled.label_tag }}</label>
+                        {{ form.suggestions_trending_enabled|add_class:'form-control' }}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.suggestions_popular_enabled.label_tag }}</label>
+                        {{ form.suggestions_popular_enabled|add_class:'form-control' }}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.suggestions_anticipated_enabled.label_tag }}</label>
+                        {{ form.suggestions_anticipated_enabled|add_class:'form-control' }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">APIs</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>{{ form.api_key_trakt.label_tag }}</label>
+                        {{ form.api_key_trakt|add_class:'form-control' }}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.api_key_trakt.label_tag }}</label>
+                        {{ form.api_key_tvdb|add_class:'form-control' }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
         </div>
     </div>
+    
+    
 </form>
 {% endblock %}
