@@ -70,6 +70,14 @@ ROOT_URLCONF = 'trova.urls'
 # Session config
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
+# Caching Config
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
