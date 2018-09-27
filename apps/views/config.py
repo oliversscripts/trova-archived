@@ -4,6 +4,6 @@ from django.shortcuts import render
 from django.urls import reverse
 
 @login_required
-def TvSearch(request):
+def ConfigTv(request):
     context = {}
-    return render(request, 'tv.search.html', context=context)
+    return render(request, 'config.tv.html', context=context)
