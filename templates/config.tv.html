@@ -13,30 +13,35 @@ TV Setup
 {% endblock %}
 
 {% block page_content %}
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">General</h3>
-    </div>
-    <div class="panel-body">
-        <form method="post" novalidate>
+{% load widget_tweaks %}
+<form method="post" novalidate>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">General</h3>
+        </div>
+        <div class="panel-body">
+            
             {% csrf_token %}
             
-            {% for hidden_field in form.hidden_fields %}
-                {{ hidden_field }}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
             {% endfor %}
             
             {% for field in form.visible_fields %}
+            
             <div class="form-group">
-                {{ field.label_tag }}
-                {{ field }}
-                {% if field.help_text %}
-                <small class="form-text text-muted">{{ field.help_text }}</small>
-                {% endif %}
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field|add_class:'form-control' }}
+                
+                {% for error in field.errors %}
+                <span class="help-block">{{ error }}</span>
+                {% endfor %}
             </div>
             {% endfor %}
             
             <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+            
+        </div>
     </div>
-</div>
+</form>
 {% endblock %}
