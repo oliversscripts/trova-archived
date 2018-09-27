@@ -1,1 +1,1 @@
-django-dbsetting
+django-dynamic-preferences
