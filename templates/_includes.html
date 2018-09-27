@@ -34,11 +34,6 @@
 </head>
 
 <body>
-    <!-- Body Block -->
-    {% block body %}
-
-    {% endblock %}
-
     <!-- jQuery -->
     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 
@@ -50,6 +45,11 @@
 
     <!-- Custom Theme JavaScript -->
     <script src=" {% static 'vendor/sb-admin-2/js/sb-admin-2.js' %}"></script>
+
+    <!-- Body Block -->
+    {% block body %}
+
+    {% endblock %}
 
 </body>
 
