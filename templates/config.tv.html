@@ -6,6 +6,11 @@ Trova - TV Setup
 
 {% block page_title %}
 TV Setup
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_table }}
+    <input type="submit" value="Submit">
+</form>
 {% endblock %}
 
 {% block page_buttons %}
