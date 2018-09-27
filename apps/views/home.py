@@ -7,7 +7,3 @@ def index(request):
     context = {}
     return render(request, 'base.default.html', context=context)
 
-def test_template(request):
-    context = {}
-    return render(request, 'base.generic.html', context=context)
-
