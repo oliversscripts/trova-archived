@@ -1,7 +1,5 @@
 function fieldset_toggler(controlling_field, fieldset_list) {
-
-    if (controlling_field) {
-        
+    if (controlling_field) { 
         if (!$('#' + controlling_field).is(":checked")) {
             fieldset_list.forEach(function(element){
                 $('#' + element).prop('disabled', true);
@@ -21,7 +19,5 @@ function fieldset_toggler(controlling_field, fieldset_list) {
                 });
             }
         });
-        
     }
-    
 }
