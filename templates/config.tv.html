@@ -32,7 +32,8 @@ TV Setup
     {% endif %}
     
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
+            
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">General</h3>
@@ -65,9 +66,7 @@ TV Setup
                     </fieldset>
                 </div>
             </div>
-        </div>
-        
-        <div class="col-md-4">
+            
             <div class="panel panel-default" id="api-credentials">
                 <div class="panel-heading">
                     <h3 class="panel-title">API Credentials</h3>
@@ -87,8 +86,50 @@ TV Setup
             </div>
         </div>
         
-        <div class="col-md-4">
+        <div class="col-md-6">
+            <div class="panel panel-default" id="sonarr">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Sonarr</h3>
+                </div>
+                <fieldset id="sonarr-fieldset">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>{{ form.sonnar_host.label_tag }}</label>
+                            {{ form.sonnar_host|add_class:'form-control' }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.sonnar_port.label_tag }}</label>
+                            {{ form.sonnar_port|add_class:'form-control' }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.sonnar_api_key.label_tag }}</label>
+                            {{ form.sonnar_api_key|add_class:'form-control' }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.sonarr_sub_directory.label_tag }}</label>
+                            {{ form.sonarr_sub_directory|add_class:'form-control' }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.sonarr_ssl.label_tag }}</label>
+                            {{ form.sonarr_ssl|add_class:'form-control' }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.sonarr_quality_profile.label_tag }}</label>
+                            {{ form.sonarr_quality_profile|add_class:'form-control' }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.sonarr_tv_dir.label_tag }}</label>
+                            {{ form.sonarr_tv_dir|add_class:'form-control' }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form.sonarr_season_folders.label_tag }}</label>
+                            {{ form.sonarr_season_folders|add_class:'form-control' }}
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
         </div>
+        
     </div>
     
 </form>
@@ -96,15 +137,18 @@ TV Setup
     if (!$('#id_enabled').is(":checked")) {
         $('#suggestions-fieldset').prop('disabled', true);
         $('#api-credentials-fieldset').prop('disabled', true);
+        $('#sonarr-fieldset').prop('disabled', true);
     }
-
+    
     $("#id_enabled").change(function() {
         if (!$('#id_enabled').is(":checked")) {
             $('#suggestions-fieldset').prop('disabled', true);
             $('#api-credentials-fieldset').prop('disabled', true);
+            $('#sonarr-fieldset').prop('disabled', true);
         } else {
             $('#suggestions-fieldset').prop('disabled', false);
             $('#api-credentials-fieldset').prop('disabled', false);
+            $('#sonarr-fieldset').prop('disabled', false);
         }
     });
     
