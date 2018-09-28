@@ -47,6 +47,7 @@
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
+            {% if all_config_data.tv_config.tv_enabled %}
             <li>
                 <a href="#"><i class="fa fa-tv fa-fw"></i> TV<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -59,12 +60,15 @@
                     <li>
                         <a href="{% url 'apps:tv_search' %}">Search</a>
                     </li>
+                    {% if all_config_data.tv_config.tv_suggestions_enabled %}
                     <li>
                         <a href="#">Suggestions</a>
                     </li>
+                    {% endif %}
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
+            {% endif %}
             {% if user.is_superuser %}
             <li class="divider"></li>
             <li>
