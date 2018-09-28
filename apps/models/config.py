@@ -15,9 +15,9 @@ class TvConfig(models.Model):
     suggestions_anticipated_enabled = models.BooleanField('Anticipated Shows', default=True)
 
     # Sonarr
-    sonnar_host = models.CharField('Sonarr IP or Hostname', max_length=254, blank=True, default='localhost')
-    sonnar_port = models.IntegerField('Sonarr Port', blank=True, null=True, default='8989')
-    sonnar_api_key = models.CharField('Sonarr API Key', max_length=254, blank=True)
+    sonarr_host = models.CharField('Sonarr IP or Hostname', max_length=254, blank=True, default='localhost')
+    sonarr_port = models.IntegerField('Sonarr Port', blank=True, null=True, default='8989')
+    sonarr_api_key = models.CharField('Sonarr API Key', max_length=254, blank=True)
     sonarr_sub_directory = models.CharField('Sonarr URL Path', max_length=254, blank=True)
     sonarr_ssl = models.BooleanField('Sonarr SSL Enabled', default=False)
     sonarr_quality_profile = models.IntegerField('Sonarr Quality Profile', blank=True, null=True)

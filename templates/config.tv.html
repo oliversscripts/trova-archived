@@ -94,16 +94,16 @@ TV Setup
                 <fieldset id="sonarr-fieldset">
                     <div class="panel-body">
                         <div class="form-group">
-                            <label>{{ form.sonnar_host.label_tag }}</label>
-                            {{ form.sonnar_host|add_class:'form-control' }}
+                            <label>{{ form.sonarr_host.label_tag }}</label>
+                            {{ form.sonarr_host|add_class:'form-control' }}
                         </div>
                         <div class="form-group">
-                            <label>{{ form.sonnar_port.label_tag }}</label>
-                            {{ form.sonnar_port|add_class:'form-control' }}
+                            <label>{{ form.sonarr_port.label_tag }}</label>
+                            {{ form.sonarr_port|add_class:'form-control' }}
                         </div>
                         <div class="form-group">
-                            <label>{{ form.sonnar_api_key.label_tag }}</label>
-                            {{ form.sonnar_api_key|add_class:'form-control' }}
+                            <label>{{ form.sonarr_api_key.label_tag }}</label>
+                            {{ form.sonarr_api_key|add_class:'form-control' }}
                         </div>
                         <div class="form-group">
                             <label>{{ form.sonarr_sub_directory.label_tag }}</label>
@@ -126,7 +126,7 @@ TV Setup
                             {{ form.sonarr_season_folders|add_class:'form-control' }}
                         </div>
                         <div class="form-group">
-                            <button type="button" class="btn btn-success">Test Sonarr</button>
+                            <button type="button" id="button-test-sonarr" class="btn btn-success">Test Sonarr</button>
                         </div>
                     </div>
                 </fieldset>
@@ -136,10 +136,18 @@ TV Setup
     </div>
     
 </form>
+
 <script>
     $(document).ready(function() {
         fieldset_toggler('id_tv_enabled', ['suggestions-fieldset','api-credentials-fieldset','sonarr-fieldset']);
     }); 
+    
+    $('#button-test-sonarr').click(function(){
+        requestData = {'url':$('#id_sonarr_host').val(), 'port':$('#id_sonarr_port').val(), 'api_key':$('#id_sonarr_api_key').val()}
+        console.log(requestData);
+        var result = sonarr_get_status();
 
+    });
+    
 </script>
 {% endblock %}
