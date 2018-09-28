@@ -9,8 +9,8 @@ TV Setup
 {% endblock %}
 
 {% block page_buttons %}
-<button type="reset" class="btn btn-danger" form="config.tv">Cancel</button>
-<button type="submit" class="btn btn-success" form="config.tv">Save</button>
+<button type="reset" id="button_cancel" class="btn btn-danger" form="config.tv">Cancel</button>
+<button type="submit" id="button_save" class="btn btn-success" form="config.tv">Save</button>
 {% endblock %}
 
 {% block page_content %}
@@ -40,8 +40,8 @@ TV Setup
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
-                        <label>{{ form.enabled.label_tag }}</label>
-                        {{ form.enabled|add_class:'form-control' }}
+                        <label>{{ form.tv_enabled.label_tag }}</label>
+                        {{ form.tv_enabled|add_class:'form-control' }}
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@ TV Setup
                             {{ form.api_key_trakt|add_class:'form-control' }}
                         </div>
                         <div class="form-group">
-                            <label>{{ form.api_key_trakt.label_tag }}</label>
+                            <label>{{ form.api_key_tvdb.label_tag }}</label>
                             {{ form.api_key_tvdb|add_class:'form-control' }}
                         </div>
                     </div>
@@ -125,6 +125,9 @@ TV Setup
                             <label>{{ form.sonarr_season_folders.label_tag }}</label>
                             {{ form.sonarr_season_folders|add_class:'form-control' }}
                         </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-success">Test Sonarr</button>
+                        </div>
                     </div>
                 </fieldset>
             </div>
@@ -134,23 +137,9 @@ TV Setup
     
 </form>
 <script>
-    if (!$('#id_enabled').is(":checked")) {
-        $('#suggestions-fieldset').prop('disabled', true);
-        $('#api-credentials-fieldset').prop('disabled', true);
-        $('#sonarr-fieldset').prop('disabled', true);
-    }
-    
-    $("#id_enabled").change(function() {
-        if (!$('#id_enabled').is(":checked")) {
-            $('#suggestions-fieldset').prop('disabled', true);
-            $('#api-credentials-fieldset').prop('disabled', true);
-            $('#sonarr-fieldset').prop('disabled', true);
-        } else {
-            $('#suggestions-fieldset').prop('disabled', false);
-            $('#api-credentials-fieldset').prop('disabled', false);
-            $('#sonarr-fieldset').prop('disabled', false);
-        }
-    });
-    
+    $(document).ready(function() {
+        fieldset_toggler('id_tv_enabled', ['suggestions-fieldset','api-credentials-fieldset','sonarr-fieldset']);
+    }); 
+
 </script>
 {% endblock %}
