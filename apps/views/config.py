@@ -21,6 +21,6 @@ def ConfigureTv(request):
         tv_config_form = TvConfigForm(instance=tv_config_data)
 
     context = {
-        'form': tv_config_form
+        'form': tv_config_form,
     }
     return render(request, 'config.tv.html', context=context)
