@@ -1,0 +1,55 @@
+{% extends "_content.html" %}
+
+{% block title %}
+Trova - TV Setup
+{% endblock %}
+
+{% block page_title %}
+TV Schedule
+{% endblock %}
+
+{% block page_buttons %}
+<button type="Refresh" id="button_save" class="btn btn-success">Refresh</button>
+{% endblock %}
+
+{% block page_content %}
+{% load widget_tweaks %}
+
+{% if message.type == 'success' %}
+<script>
+    successMessage('{{ message.text }}');
+</script>
+{% endif %}
+
+<!-- Main page content -->
+
+<table id="example" class="display" width="100%"></table>
+
+<!-- End of main page content-->
+<script>
+    $(document).ready(function() {
+        var scheduleJSON = JSON.parse('{{ schedule | escapejs }}');
+        var scheduleData = JSON.parse(scheduleJSON);
+        console.log(scheduleData);
+
+        var dataSet = [];
+        scheduleData.forEach(function(element){
+            var episodeData = [];
+            episodeData.push(element.series.title);
+            episodeData.push(element.title);
+            episodeData.push(element.airDate);
+            dataSet.push(episodeData);
+        });
+       
+        $('#example').DataTable( {
+            data: dataSet,
+            columns: [
+                { title: "Series" },
+                { title: "Epsiode" },
+                { title: "Air Date" },
+            ],
+            order: [[ 2, "asc" ]]
+        } );
+    } );
+</script>
+{% endblock %}

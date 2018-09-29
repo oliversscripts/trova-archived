@@ -10,13 +10,19 @@ TV Setup
 
 {% block page_buttons %}
 <button type="reset" id="button_cancel" class="btn btn-danger" form="config.tv">Cancel</button>
-<button id="button_save" class="btn btn-success" form="config.tv">Save</button>
+<button type="submit" id="button_save" class="btn btn-success" form="config.tv">Save</button>
 {% endblock %}
 
 {% block page_content %}
 {% load widget_tweaks %}
 
-<form method="post" id="config.tv" ic-post-to="{% url 'apps:configure_tv' %}" ic-on-success="onSuccess();" ic-on-error="onError();" ic-on-beforeSend="xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');" >
+{% if message.type == 'success' %}
+<script>
+    successMessage('{{ message.text }}');
+</script>
+{% endif %}
+
+<form method="post" id="config.tv">
     {% csrf_token %}
     
     {% for hidden in form.hidden_fields %}
@@ -125,14 +131,10 @@ TV Setup
                             <label>{{ form.sonarr_season_folders.label_tag }}</label>
                             {{ form.sonarr_season_folders|add_class:'form-control' }}
                         </div>
-                        <div class="form-group">
-                            <button type="button" id="button-test-sonarr" class="btn btn-success">Test Sonarr</button>
-                        </div>
                     </div>
                 </fieldset>
             </div>
         </div>
-        
     </div>
     
 </form>
@@ -141,22 +143,5 @@ TV Setup
     $(document).ready(function() {
         fieldset_toggler('id_tv_enabled', ['suggestions-fieldset','api-credentials-fieldset','sonarr-fieldset']);
     }); 
-
-    function onSuccess(){
-        console.log("Saved");
-    }
-
-    function onError(){
-        console.log("Error");
-    }
-    
-    $('#button-test-sonarr').click(function(){
-        requestData = {'url':$('#id_sonarr_host').val(), 'port':$('#id_sonarr_port').val(), 'api_key':$('#id_sonarr_api_key').val()}
-        console.log(requestData);
-        var result = sonarr_get_status(requestData);
-
-    });
-    
 </script>
-<div id="blackhole"></div>
 {% endblock %}

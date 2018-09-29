@@ -8,11 +8,15 @@ from apps.forms import TvConfigForm
 
 @login_required
 def ConfigureTv(request):
+    context = {}
+    message = {}
+
     if request.method == 'POST':
         tv_config_data = TvConfig.objects.all()[0]
         tv_config_form = TvConfigForm(request.POST, instance=tv_config_data)
         tv_config_form.save()
-        return HttpResponse()
+        message = {'type':'success', 'text':'Saved'}
+        
     else:
         if TvConfig.objects.all().exists():
             tv_config_data = TvConfig.objects.all()[0]
@@ -21,8 +25,9 @@ def ConfigureTv(request):
 
         tv_config_form = TvConfigForm(instance=tv_config_data)
 
-        context = {
-            'form': tv_config_form,
-        }
-        return render(request, 'config.tv.html', context=context)
+
+    context['form'] = tv_config_form
+    context['message'] = message
+
+    return render(request, 'config.tv.html', context=context)
 
