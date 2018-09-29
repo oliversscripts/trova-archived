@@ -9,7 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     
-    <!-- <meta name="intercoolerjs:use-actual-http-method" content="true"/> -->
+    <meta name="intercoolerjs:use-actual-http-method" content="true"/>
+    <meta name="intercoolerjs:use-data-prefix" content="true"/>
     
     <title>{% block title %}{% endblock %}</title>
     
@@ -18,7 +19,10 @@
     
     <!-- Bootoast CSS -->
     <link href="{% static 'vendor/bootoast-master/dist/bootoast.min.css' %}" rel="stylesheet">
-    
+
+    <!-- Datatable CSS -->
+    <link href="{% static 'vendor/datatables/css/jquery.dataTables.min.css' %}" rel="stylesheet">
+
     <!-- MetisMenu CSS -->
     <link href="{% static 'vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
     
@@ -48,6 +52,9 @@
         <!-- Bootoast Javascript -->
         <script src="{% static 'vendor/bootoast-master/dist/bootoast.min.js' %}"></script>
         
+        <!-- Datatable Javascript -->
+        <script src="{% static 'vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+        
         <!-- Metis Menu Plugin JavaScript -->
         <script src="{% static 'vendor/metisMenu/metisMenu.min.js' %}"></script>
         
@@ -59,6 +66,7 @@
         
         <!-- Custom Trova JavaScript -->
         <script src=" {% static 'js/forms.js' %}"></script>
+        <script src=" {% static 'js/messages.js' %}"></script>
         <script src=" {% static 'js/sonarr.api.js' %}"></script>
         
         <!-- Body Block -->
