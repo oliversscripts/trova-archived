@@ -40,7 +40,7 @@ SECRET_KEY = get_env_var("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
@@ -57,9 +57,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'intercooler_helpers.middleware.HttpMethodOverride',
-    'intercooler_helpers.middleware.IntercoolerData',
-    'intercooler_helpers.middleware.IntercoolerRedirector',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
