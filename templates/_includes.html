@@ -1,65 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+    <head>
     {% load static %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    
     <!-- <meta name="intercoolerjs:use-actual-http-method" content="true"/> -->
-
+    
     <title>{% block title %}{% endblock %}</title>
-
+    
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
+    
+    <!-- Bootoast CSS -->
+    <link href="{% static 'vendor/bootoast-master/dist/bootoast.min.css' %}" rel="stylesheet">
+    
     <!-- MetisMenu CSS -->
     <link href="{% static 'vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
-
+    
     <!-- Custom CSS -->
     <link href="{% static 'vendor/sb-admin-2/css/sb-admin-2.css' %}" rel="stylesheet">
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
-
+    
     <!-- Custom Fonts -->
     <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-
-<body>
-     <!-- jQuery -->
-     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-
-     <!-- Bootstrap Core JavaScript -->
-     <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
- 
-     <!-- Metis Menu Plugin JavaScript -->
-     <script src="{% static 'vendor/metisMenu/metisMenu.min.js' %}"></script>
- 
-     <!-- Custom Theme JavaScript -->
-     <script src=" {% static 'vendor/sb-admin-2/js/sb-admin-2.js' %}"></script>
- 
-     <!-- Intercooler Javascript -->
-     <script src="{% static 'intercoolerjs/js/intercooler.min.js' %}"></script>
+        <![endif]-->
+        
+    </head>
     
-     <!-- Custom Trova JavaScript -->
-     <script src=" {% static 'js/forms.js' %}"></script>
-     <script src=" {% static 'js/sonarr.api.js' %}"></script>
-     
-    <!-- Body Block -->
-    {% block body %}
-
-    {% endblock %}  
-
-</body>
-
+    <body>
+        <!-- jQuery -->
+        <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+        
+        <!-- Bootstrap Core JavaScript -->
+        <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+        
+        <!-- Bootoast Javascript -->
+        <script src="{% static 'vendor/bootoast-master/dist/bootoast.min.js' %}"></script>
+        
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="{% static 'vendor/metisMenu/metisMenu.min.js' %}"></script>
+        
+        <!-- Custom Theme JavaScript -->
+        <script src=" {% static 'vendor/sb-admin-2/js/sb-admin-2.js' %}"></script>
+        
+        <!-- Intercooler Javascript -->
+        <script src="{% static 'intercoolerjs/js/intercooler.min.js' %}"></script>
+        
+        <!-- Custom Trova JavaScript -->
+        <script src=" {% static 'js/forms.js' %}"></script>
+        <script src=" {% static 'js/sonarr.api.js' %}"></script>
+        
+        <!-- Body Block -->
+        {% block body %}
+        
+        {% endblock %}  
+        
+    </body>
+    
 </html>
