@@ -51,11 +51,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'intercoolerjs',
     'widget_tweaks',
     'apps'
 ]
 
 MIDDLEWARE = [
+    'intercooler_helpers.middleware.HttpMethodOverride',
+    'intercooler_helpers.middleware.IntercoolerData',
+    'intercooler_helpers.middleware.IntercoolerRedirector',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

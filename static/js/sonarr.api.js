@@ -2,6 +2,7 @@
 
 function sonarr_get_status(api_data) {
     console.log('sonarr_getstatus called');
+    console.log(api_data);
     var url = 'http://' + api_data.url + ':' + api_data.port + '/api/system/status?apikey=' + api_data.api_key; 
     console.log(url);
     $.get(url, function(data){
