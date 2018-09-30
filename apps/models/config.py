@@ -5,7 +5,8 @@ class TvConfig(models.Model):
     tv_enabled = models.BooleanField('Enabled', default=True)
 
     # APIs
-    api_key_trakt = models.CharField('Trakt API Key', max_length=254, blank=True)
+    api_key_trakt_client_id = models.CharField('Trakt API Client ID', max_length=254, blank=True)
+    api_key_trakt_client_secret = models.CharField('Trakt API Client Secret', max_length=254, blank=True)
     api_key_tvdb = models.CharField('TVDB API Key', max_length=254, blank=True)
     
     # Suggestions

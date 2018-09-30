@@ -1,2 +1,4 @@
 django-widget-tweaks
 django-intercoolerjs
+pytvdbapi
+trakt
