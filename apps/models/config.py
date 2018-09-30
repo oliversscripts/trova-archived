@@ -1,10 +1,9 @@
-from django.db import models
+from apps.includes import *
 
 class TvConfig(models.Model):
-
     # General
     tv_enabled = models.BooleanField('Enabled', default=True)
-    
+
     # APIs
     api_key_trakt = models.CharField('Trakt API Key', max_length=254, blank=True)
     api_key_tvdb = models.CharField('TVDB API Key', max_length=254, blank=True)

@@ -1,0 +1,24 @@
+{% if messages %}
+    {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+        <script>
+            infoMessage('{{ message }}');
+        </script>
+        {% endif %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+        <script>
+            successMessage('{{ message }}');
+        </script>
+        {% endif %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+        <script>
+            warningMessage('{{ message }}');
+        </script>
+        {% endif %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <script>
+            errorMessage('{{ message }}');
+        </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}

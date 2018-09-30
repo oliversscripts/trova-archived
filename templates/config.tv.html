@@ -9,18 +9,13 @@ TV Setup
 {% endblock %}
 
 {% block page_buttons %}
-<button type="reset" id="button_cancel" class="btn btn-danger" form="config.tv">Cancel</button>
-<button type="submit" id="button_save" class="btn btn-success" form="config.tv">Save</button>
+<a href="{% url 'apps:config.tv.test.sonarr' %}" id="button_test_sonarr" class="btn btn-info page-action-buttons">Test Sonarr</a>
+<button type="reset" id="button_cancel" class="btn btn-danger page-action-buttons" form="config.tv">Cancel</button>
+<button type="submit" id="button_save" class="btn btn-success page-action-buttons" form="config.tv">Save</button>
 {% endblock %}
 
 {% block page_content %}
 {% load widget_tweaks %}
-
-{% if message.type == 'success' %}
-<script>
-    successMessage('{{ message.text }}');
-</script>
-{% endif %}
 
 <form method="post" id="config.tv">
     {% csrf_token %}
@@ -144,4 +139,5 @@ TV Setup
         fieldset_toggler('id_tv_enabled', ['suggestions-fieldset','api-credentials-fieldset','sonarr-fieldset']);
     }); 
 </script>
+
 {% endblock %}
