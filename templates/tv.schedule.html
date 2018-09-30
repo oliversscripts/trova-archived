@@ -17,13 +17,18 @@ TV Schedule
 
 <!-- Main page content -->
 
-<table id="example" class="display" width="100%"></table>
+{% if sonarr.success %}
+    <table id="schedule" class="display" width="100%"></table>
+{% else %}
+    Connection Failed
+{% endif %}
+
+
 
 <!-- End of main page content-->
 <script>
     $(document).ready(function() {
-        var scheduleJSON = JSON.parse('{{ schedule | escapejs }}');
-        var scheduleData = JSON.parse(scheduleJSON);
+        var scheduleData = JSON.parse('{{ sonarr.data | escapejs }}');
         console.log(scheduleData);
 
         var dataSet = [];
@@ -35,7 +40,7 @@ TV Schedule
             dataSet.push(episodeData);
         });
        
-        $('#example').DataTable( {
+        $('#schedule').DataTable( {
             data: dataSet,
             columns: [
                 { title: "Series" },

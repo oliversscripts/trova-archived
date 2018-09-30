@@ -1,4 +1,4 @@
-from apps.includes import *
+from apps.libs import *
 
 @login_required
 def Index(request):

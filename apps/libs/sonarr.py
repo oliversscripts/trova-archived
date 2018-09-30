@@ -2,7 +2,6 @@
 
 import requests
 
-
 class SonarrAPI(object):
 
     def __init__(self, host_url, api_key):
@@ -10,20 +9,23 @@ class SonarrAPI(object):
         self.host_url = host_url
         self.api_key = api_key
 
-
     # ENDPOINT CALENDAR
     def get_calendar(self):
         # optional params: start (date) & end (date)
         """Gets upcoming episodes, if start/end are not supplied episodes airing today and tomorrow will be returned"""
-        res = self.request_get("{}/calendar".format(self.host_url))
+        res = self.request_get("{}/calendar?".format(self.host_url))
         return res.json()
 
+    # ENDPOINT CALENDAR
+    def get_calendar_range(self, start_date, end_date):
+        # optional params: start (date) & end (date)
+        """Gets upcoming episodes, if start/end are not supplied episodes airing today and tomorrow will be returned"""
+        res = self.request_get("{}/calendar?start={}&end={}".format(self.host_url, start_date, end_date))
+        return res.json()
 
     # ENDPOINT COMMAND
     def command(self):
         pass
-
-
 
     # ENDPOINT DISKSPACE
     def get_diskspace(self):
@@ -51,7 +53,6 @@ class SonarrAPI(object):
         res = self.request_put("{}/episode".format(self.host_url, data))
         return res.json()
 
-
     # ENDPOINT EPISODE FILE
     def get_episode_files_by_series_id(self, series_id):
         """Returns all episode files for the given series"""
@@ -70,14 +71,12 @@ class SonarrAPI(object):
         res = self.request_del("{}/episodefile/{}".format(self.host_url, episode_id))
         return res.json()
 
-
     # ENDPOINT HISTORY
     # DOES NOT WORK
     def get_history(self):
         """Gets history (grabs/failures/completed)"""
         res = self.request_get("{}/history".format(self.host_url))
         return res.json()
-
 
     # ENDPOINT WANTED MISSING
     # DOES NOT WORK
@@ -86,13 +85,11 @@ class SonarrAPI(object):
         res = self.request_get("{}/wanted/missing/".format(self.host_url))
         return res.json()
 
-
     # ENDPOINT QUEUE
     def get_queue(self):
         """Gets current downloading info"""
         res = self.request_get("{}/queue".format(self.host_url))
         return res.json()
-
 
     # ENDPOINT PROFILE
     def get_quality_profiles(self):
@@ -100,9 +97,7 @@ class SonarrAPI(object):
         res = self.request_get("{}/profile".format(self.host_url))
         return res.json()
 
-
     # ENDPOINT RELEASE
-
 
     # ENDPOINT RELEASE/PUSH
     def push_release(self, title, downloadUrl, protocol, publishDate):
@@ -122,13 +117,11 @@ class SonarrAPI(object):
                 })
         return res.json()
 
-
     # ENDPOINT ROOTFOLDER
     def get_root_folder(self):
         """Returns the Root Folder"""
         res = self.request_get("{}/rootfolder".format(self.host_url))
         return res.json()
-
 
     # ENDPOINT SERIES
     def get_series(self):
@@ -185,13 +178,11 @@ class SonarrAPI(object):
         res = self.request_del("{}/series/{}".format(self.host_url, series_id), data)
         return res.json()
 
-
     # ENDPOINT SERIES LOOKUP
     def lookup_series(self, query):
         """Searches for new shows on trakt"""
         res = self.request_get("{}/series/lookup?term={}".format(self.host_url, query))
         return res.json()
-
 
     # ENDPOINT SYSTEM-STATUS
     def get_system_status(self):
@@ -200,14 +191,13 @@ class SonarrAPI(object):
         return res.json()
 
 
-
     # REQUESTS STUFF
     def request_get(self, url, data={}):
         """Wrapper on the requests.get"""
         headers = {
             'X-Api-Key': self.api_key
         }
-        res = requests.get(url, headers=headers, json=data)
+        res = requests.get(url, headers=headers, json=data, timeout=10)
         return res
 
     def request_post(self, url, data):
@@ -215,7 +205,7 @@ class SonarrAPI(object):
         headers = {
             'X-Api-Key': self.api_key
         }
-        res = requests.post(url, headers=headers, json=data)
+        res = requests.post(url, headers=headers, json=data, timeout=10)
         return res
 
     def request_put(self, url, data):
@@ -223,7 +213,7 @@ class SonarrAPI(object):
         headers = {
             'X-Api-Key': self.api_key
         }
-        res = requests.put(url, headers=headers, json=data)
+        res = requests.put(url, headers=headers, json=data, timeout=10)
         return res
 
     def request_del(self, url, data):
@@ -231,5 +221,5 @@ class SonarrAPI(object):
         headers = {
             'X-Api-Key': self.api_key
         }
-        res = requests.delete(url, headers=headers, json=data)
+        res = requests.delete(url, headers=headers, json=data, timeout=10)
         return res

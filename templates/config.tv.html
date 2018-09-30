@@ -24,14 +24,6 @@ TV Setup
     {{ hidden }}
     {% endfor %}
     
-    {% if form.non_field_errors %}
-    <div class="alert alert-danger" role="alert">
-        {% for error in form.non_field_errors %}
-        {{ error }}
-        {% endfor %}
-    </div>
-    {% endif %}
-    
     <div class="row">
         <div class="col-md-6">
             

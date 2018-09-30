@@ -1,12 +1,13 @@
-from apps.includes import *
+from apps.libs import *
 
 # Forms
 from apps.forms import TvConfigForm
 
+# Functions
+from apps.functions.sonarr import *
+
 # Models
 from apps.models import TvConfig
-
-
 
 
 @login_required
@@ -36,21 +37,12 @@ def ConfigTv(request):
 
     return render(request, 'config.tv.html', context=context)
 
+
 @login_required
 def ConfigTvTestSonarr(request):
     context = {}
-
-    tv_config_data = TvConfig.objects.all()[0]
-
-    url = 'http://' + tv_config_data.sonarr_host + ':' + str(tv_config_data.sonarr_port) + '/api/calendar?apikey=' + tv_config_data.sonarr_api_key
-    r = requests.get(url, params=request.GET)
+    context['sonarr'] = SonarrGetStatus()
     
-    schedule_dict = json.dumps(r.text)
-    
-    scheduleData = []
-
-    context['schedule'] = json.dumps(r.text)
-
     return render(request, 'config.tv.test.sonarr.html', context=context)
 
 

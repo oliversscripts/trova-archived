@@ -15,9 +15,14 @@ Sonarr Test
 {% block page_content %}
 {% load widget_tweaks %}
 
+{% if sonarr.success %}
+    {{ sonarr.data }}
+{% else %}
+    Connection Failed
+{% endif %}
 
 <script>
-  
+
 </script>
 
 {% endblock %}

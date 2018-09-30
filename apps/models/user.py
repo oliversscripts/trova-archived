@@ -1,4 +1,4 @@
-from apps.includes import *
+from apps.libs import *
 
 class User(AbstractUser):
     plex_id = models.CharField(max_length=254, blank=True)

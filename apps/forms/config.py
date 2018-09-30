@@ -1,4 +1,4 @@
-from apps.includes import *
+from apps.libs import *
 
 from apps.models import TvConfig
 
