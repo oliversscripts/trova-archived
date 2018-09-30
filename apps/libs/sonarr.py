@@ -134,7 +134,7 @@ class SonarrAPI(object):
         res = self.request_get("{}/series/{}".format(self.host_url, series_id))
         return res.json()
 
-    def constuct_series_json(self, tvdbId, quality_profile):
+    def constuct_series_json(self, tvdbId, quality_profile, season_folders, monitored):
         """Searches for new shows on trakt and returns Series object to add"""
         res = self.request_get("{}/series/lookup?term={}".format(self.host_url, 'tvdbId:' + str(tvdbId)))
         s_dict = res.json()[0]
@@ -146,8 +146,8 @@ class SonarrAPI(object):
             'seasons': s_dict['seasons'],
             'path': root + s_dict['title'],
             'qualityProfileId': quality_profile,
-            'seasonFolder': True,
-            'monitored': True,
+            'seasonFolder': season_folders,
+            'monitored': monitored,
             'tvdbId': tvdbId,
             'images': s_dict['images'],
             'titleSlug': s_dict['titleSlug'],

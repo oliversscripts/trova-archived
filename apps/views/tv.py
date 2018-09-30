@@ -20,7 +20,7 @@ def TvSearchRequest(request):
     language = 'en'
     if request.is_ajax():
         if tv_config_data.api_key_tvdb != "":
-            db = tvdbApi.TVDB('B43FF87DE395DF56', ignore_case=True)
+            db = tvdbApi.TVDB(tv_config_data.api_key_tvdb, ignore_case=True)
             result = db.search(keyword, language)
             json_result = jsonpickle.encode(result, unpicklable=False, max_depth=5)
             response_data = {
@@ -34,6 +34,7 @@ def TvSearchRequest(request):
             }
 
         return JsonResponse(response_data)
+    
 
 @login_required
 def TvSchedule(request):
