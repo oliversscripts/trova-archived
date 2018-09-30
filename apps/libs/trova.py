@@ -7,10 +7,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.forms import ModelForm
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import path, reverse
 
+
 # Other
 import json
+import jsonpickle
 import requests
+from pytvdbapi import api as tvdbApi

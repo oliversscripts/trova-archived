@@ -15,13 +15,114 @@ TV Search
 {% block page_content %}
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">General</h3>
+        <h3 class="panel-title">Search</h3>
     </div>
     <div class="panel-body">
         <div class="form-group">
-            <label>Search</label>
-            
+            <input class="form-control" type="text" id="search" name="search" placeholder="Search for TV Series">
         </div>
     </div>
 </div>
+<div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Results</h3>
+        </div>
+        <div class="panel-body">
+            <div id="search_results">
+                <table id="search_results_table" class="display" width="100%"></table>
+            </div>
+        </div>
+    </div>
+
+<script>
+$(document).ready(function() {
+
+    var delay = (function(){
+        var timer = 0;
+        return function(callback, ms){
+            clearTimeout (timer);
+            timer = setTimeout(callback, ms);
+        };
+    })();
+
+    $('#search').keyup(function() {
+        delay(function(){
+            // AJAX GET
+            $.ajax({
+                type: "GET",
+                url: "{% url 'apps:tv.search.request' %}?search=" + $("#search").val(),
+                success: function(data) {
+                    var responseData = JSON.parse(data.response);
+                    var responseResults = responseData['_result'];
+                    console.log(responseResults);
+                    var dataSet = [];
+                    responseResults.forEach(function(element){
+                        var showData = [];
+                        
+                        var showName = element['data']['_data']['seriesname'];
+                        var showOverview = element['data']['_data']['overview'];
+                        var showImageUrl = element['data']['_data']['banner'];
+
+                        if (showImageUrl != null) {
+                            showData.push("<img src='https://www.thetvdb.com/banners/" + showImageUrl + "'/>");
+                        } else {
+                            showData.push("No Image");
+                        }
+                        showData.push("<h4>" + showName + "</h4>" + showOverview);
+                        
+                        dataSet.push(showData);
+                    });
+
+                    if ($.fn.dataTable.isDataTable('#search_results_table')) {
+                        $('#search_results_table').DataTable().destroy();
+                    }
+
+                    $('#search_results_table').DataTable( {
+                        data: dataSet,
+                        columns: [
+                            { title: "Banner" },
+                            { title: "Show Details" }
+                        ]
+                    });
+                }
+            });
+        }, 1000 );
+    });
+
+    
+    // CSRF code
+    function getCookie(name) {
+        var cookieValue = null;
+        var i = 0;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (i; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    $.ajaxSetup({
+        crossDomain: false, // obviates need for sameOrigin test
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type)) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    }); 
+});
+</script>
 {% endblock %}
+

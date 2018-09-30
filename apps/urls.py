@@ -10,5 +10,6 @@ urlpatterns = [
     path('config/tv/test/sonarr/', views.ConfigTvTestSonarr, name='config.tv.test.sonarr'),
     path('tv/schedule/', views.TvSchedule, name='tv.schedule'),
     path('tv/search/', views.TvSearch, name='tv.search'),
+    path('tv/search/request/', views.TvSearchRequest, name='tv.search.request'),
 
 ]
