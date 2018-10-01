@@ -1,5 +1,6 @@
 # Django
 from django import forms
+from django.conf import settings
 from django.conf.urls import url
 from django.core import serializers
 from django.contrib import messages
