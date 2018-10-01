@@ -134,7 +134,7 @@ class SonarrAPI(object):
         res = self.request_get("{}/series/{}".format(self.host_url, series_id))
         return res.json()
 
-    def constuct_series_json(self, tvdbId, quality_profile, season_folders, monitored):
+    def construct_series_json(self, tvdbId, quality_profile, season_folders, monitored, search_missing):
         """Searches for new shows on trakt and returns Series object to add"""
         res = self.request_get("{}/series/lookup?term={}".format(self.host_url, 'tvdbId:' + str(tvdbId)))
         s_dict = res.json()[0]
@@ -153,7 +153,8 @@ class SonarrAPI(object):
             'titleSlug': s_dict['titleSlug'],
             "addOptions": {
                           "ignoreEpisodesWithFiles": True,
-                          "ignoreEpisodesWithoutFiles": True
+                          "ignoreEpisodesWithoutFiles": True,
+                          "searchForMissingEpisodes": search_missing
                         }
                     }
         return series_json
