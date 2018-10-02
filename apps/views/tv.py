@@ -33,7 +33,23 @@ def TvSearchRequest(request):
                 'response':'TVDB Api Key Missing'
             }
 
-        return JsonResponse(response_data)
+        #return JsonResponse(response_data)
+
+@login_required
+def TvSearchRequestNew(request):
+    response_data = {}
+    tv_config_data = TvConfig.objects.all()[0]
+    
+    keyword = str(request.GET['search'])
+    if request.is_ajax():
+        search_result = SonarrLookupSeries(keyword)
+        if search_result['success']:
+            response_data['search_results'] = jsonpickle.encode(search_result['data'], unpicklable=False)
+            shows_result = SonarrGetShows()
+            if shows_result['success']:
+                response_data['shows_list'] = jsonpickle.encode(shows_result['data'], unpicklable=False)
+
+            return JsonResponse(response_data, safe=False)
     
 
 @login_required

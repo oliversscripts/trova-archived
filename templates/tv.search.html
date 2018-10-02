@@ -19,7 +19,8 @@ TV Search
     </div>
     <div class="panel-body">
         <div class="form-group">
-            <input class="form-control" type="text" id="search" name="search" placeholder="Search for TV Series">
+            <input class="form-control" type="text" id="search" name="search" placeholder="Search for TV Series" style="display:inline-block;">
+            <i class="fa fa-spinner fa-spin" style="font-size:24px; display:none;" id="spinner"></i>
         </div>
     </div>
 </div>
@@ -47,30 +48,46 @@ $(document).ready(function() {
 
     $('#search').keyup(function() {
         delay(function(){
+            $('#search').css('display','none');
+            $('#spinner').css('display','inline-block');
             // AJAX GET
             $.ajax({
                 type: "GET",
                 url: "{% url 'apps:tv.search.request' %}?search=" + $("#search").val(),
                 success: function(data) {
-                    var responseData = JSON.parse(data.response);
-                    var responseResults = responseData['_result'];
-                    console.log(responseResults);
-                    var dataSet = [];
-                    responseResults.forEach(function(element){
+                    var searchList = JSON.parse(JSON.parse(data['search_results']));
+                    var showsList = JSON.parse(JSON.parse(data['shows_list']));
+
+                    var showsListIds = []
+                    showsList.forEach(function(existingShow){
+                        showsListIds.push(existingShow['tvdbId']);
+                    });
+
+                    var tableDataSet = [];
+                    searchList.forEach(function(show){
                         var showData = [];
                         
-                        var showName = element['data']['_data']['seriesname'];
-                        var showOverview = element['data']['_data']['overview'];
-                        var showImageUrl = element['data']['_data']['banner'];
+                        var showName = show['title'];
+                        var showOverview = show['overview'];
+                        var showImageUrl;
+                        show['images'].forEach(function(image){
+                            if (image['coverType'] == 'banner') {
+                                showImageUrl = image['url'];
+                            }
+                        });
 
                         if (showImageUrl != null) {
-                            showData.push("<img src='https://www.thetvdb.com/banners/" + showImageUrl + "'/>");
+                            showData.push("<img src='" + showImageUrl + "'/>");
                         } else {
                             showData.push("No Image");
                         }
-                        showData.push("<h4>" + showName + "</h4>" + showOverview);
+                        if (showsListIds.includes(show['tvdbId'])) {
+                            showData.push("<h4>EXISTS: " + showName + "</h4>" + showOverview);
+                        } else {
+                            showData.push("<h4>" + showName + "</h4>" + showOverview);
+                        } 
                         
-                        dataSet.push(showData);
+                        tableDataSet.push(showData);
                     });
 
                     if ($.fn.dataTable.isDataTable('#search_results_table')) {
@@ -78,12 +95,15 @@ $(document).ready(function() {
                     }
 
                     $('#search_results_table').DataTable( {
-                        data: dataSet,
+                        data: tableDataSet,
                         columns: [
                             { title: "Banner" },
                             { title: "Show Details" }
                         ]
                     });
+
+                    $('#search').css('display','inline-block');
+                    $('#spinner').css('display','none');
                 }
             });
         }, 1000 );

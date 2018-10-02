@@ -38,6 +38,34 @@ def SonarrGetStatus():
 
     return sonarrData
 
+def SonarrGetShows():
+    sonarrData = {}
+    tv_config_data = TvConfig.objects.all()[0]
+
+    snr = SonarrAPI(SonarrGetUrl(), SonarrGetApiKey())
+
+    try:
+        sonarrData['data'] = json.dumps(snr.get_series())
+        sonarrData['success'] = True
+    except:
+        sonarrData['success'] = False
+
+    return sonarrData
+
+def SonarrLookupSeries(search_words):
+    sonarrData = {}
+    tv_config_data = TvConfig.objects.all()[0]
+
+    snr = SonarrAPI(SonarrGetUrl(), SonarrGetApiKey())
+
+    try:
+        sonarrData['data'] = json.dumps(snr.lookup_series(search_words))
+        sonarrData['success'] = True
+    except:
+        sonarrData['success'] = False
+
+    return sonarrData
+
 def SonarrGetCalendar():
     sonarrData = {}
     tv_config_data = TvConfig.objects.all()[0]
