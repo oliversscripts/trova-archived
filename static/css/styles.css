@@ -8,8 +8,19 @@
     padding-right: 0px;
 }
 
-.container-fluid button {
-    margin-top: 15px;
+.no-vertical-padding { 
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.no-horizontal-margin { 
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.no-vertical-margin { 
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .page-action-buttons {
