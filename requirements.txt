@@ -1,5 +1,5 @@
 django-widget-tweaks
-django-intercoolerjs
-pytvdbapi
-trakt
+django-background-tasks
 jsonpickle
+trakt
+
