@@ -54,8 +54,8 @@ TV Search
                         type: "GET",
                         url: "{% url 'apps:tv.search.request' %}?search=" + $("#search").val(),
                         success: function(data) {
-                            var searchList = JSON.parse(JSON.parse(data['search_results']));
-                            var showsList = JSON.parse(JSON.parse(data['shows_list']));
+                            var searchList = JSON.parse(data['search_results']);
+                            var showsList = JSON.parse(data['shows_list']);
                             console.log(searchList);
                             console.log(showsList);
 
@@ -142,6 +142,7 @@ TV Search
                                                         </div> \
                                                         <div class="row padding-t-md"> \
                                                             <div class="col-md-12"> \
+                                                                Overview: <br /> \
                                                                 ' + showOverview + ' \
                                                             </div> \
                                                         </div> \

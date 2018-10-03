@@ -9,7 +9,7 @@ TV Schedule
 {% endblock %}
 
 {% block page_buttons %}
-<button type="Refresh" id="button_save" class="btn btn-success">Refresh</button>
+
 {% endblock %}
 
 {% block page_content %}
@@ -18,7 +18,15 @@ TV Schedule
 <!-- Main page content -->
 
 {% if sonarr.success %}
-    <table id="schedule" class="display" width="100%"></table>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Schedule</h3>
+    </div>
+    <div class="panel-body">
+        <table id="schedule" class="display" width="100%"></table>
+    </div>
+</div>
+
 {% else %}
     Connection Failed
 {% endif %}

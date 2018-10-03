@@ -15,4 +15,8 @@ urlpatterns = [
     path('tv/search/request/', views.TvSearchRequest, name='tv.search.request'),
     path('tv/search/add/', views.TvSearchAdd, name='tv.search.add'),
     path('tv/search/exists/', views.TvSearchExists, name='tv.search.exists'),
+
+    path('tv/requests/', views.TvRequests, name='tv.requests'),
+    path('tv/requests/<int:request_id>', views.TvRequestsDetail, name='tv.requests.detail'),
+
 ]
