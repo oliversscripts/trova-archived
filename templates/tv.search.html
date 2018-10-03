@@ -92,12 +92,15 @@ TV Search
                                         show_image = 'No Image';
                                     }
 
+                                    var existsUrl = "{% url 'apps:tv.search.exists' %}";
+                                    var requestUrl = "{% url 'apps:tv.search.add' %}";
+                                    
                                     if (showsListIds.includes(show['tvdbId'])) {
                                         exists = true;
-                                        var show_buttons = '<button class="btn btn-default no-vertical-margin" type="submit">Exists</button>';
+                                        var show_buttons = '<a href="' + existsUrl + '" id="button_exists" class="btn btn-info no-vertical-margin">Exists</a>';
                                     } else {
                                         exists = false;
-                                        var show_buttons = '<button class="btn btn-success no-vertical-margin" type="submit">Request</button>';
+                                        var show_buttons = '<a href="' + requestUrl + '" id="button_exists" class="btn btn-success no-vertical-margin">Request</a>';
                                     }
 
                                     var show_name = show['title'];
