@@ -7,7 +7,6 @@ class TvConfig(models.Model):
     # APIs
     api_key_trakt_client_id = models.CharField('Trakt API Client ID', max_length=254, blank=True)
     api_key_trakt_client_secret = models.CharField('Trakt API Client Secret', max_length=254, blank=True)
-    api_key_tvdb = models.CharField('TVDB API Key', max_length=254, blank=True)
     
     # Suggestions
     suggestions_trending_enabled = models.BooleanField('Trending Shows', default=True)
