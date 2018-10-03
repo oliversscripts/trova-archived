@@ -14,7 +14,7 @@ from django.urls import path, reverse
 
 
 # Other
+from background_task import background
 import json
 import jsonpickle
 import requests
-from pytvdbapi import api as tvdbApi
