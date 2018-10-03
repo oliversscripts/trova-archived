@@ -35,7 +35,10 @@ def TvSearchRequest(request):
 @login_required
 def TvSearchAdd(request):
     response_data = {}
-    return JsonResponse(response_data, safe=False)
+    tvdbId = str(request.GET['tvdbId'])
+
+    add_result = SonarrAddSeries(tvdbId)
+    return JsonResponse(add_result, safe=False)
 
 @login_required
 def TvSearchExists(request):

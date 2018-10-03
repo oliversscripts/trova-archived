@@ -66,6 +66,36 @@ def SonarrLookupSeries(search_words):
 
     return sonarrData
 
+def SonarrAddSeries(tvdbId):
+    show_json = {}
+    sonarrData = {}
+    tv_config_data = TvConfig.objects.all()[0]
+
+    snr = SonarrAPI(SonarrGetUrl(), SonarrGetApiKey())
+
+    try: 
+        show_json['data'] = snr.construct_series_json(
+            tvdbId,
+            tv_config_data.sonarr_quality_profile,
+            tv_config_data.sonarr_season_folders, 
+            tv_config_data.sonarr_monitored, 
+            tv_config_data.sonarr_search_missing, 
+        )
+        show_json['success'] = True
+    except: 
+        show_json['success'] = False
+
+    if show_json['success']:
+        try:
+            sonarrData['data'] = json.dumps(snr.add_series(show_json['data']))
+            sonarrData['success'] = True
+        except:
+            sonarrData['success'] = False
+    else:
+        sonarrData['success'] = False
+
+    return sonarrData
+
 def SonarrGetCalendar():
     sonarrData = {}
     tv_config_data = TvConfig.objects.all()[0]

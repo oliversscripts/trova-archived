@@ -23,6 +23,8 @@ class TvConfig(models.Model):
     sonarr_quality_profile = models.IntegerField('Sonarr Quality Profile', blank=True, null=True)
     sonarr_tv_dir = models.CharField('Sonarr TV Folder Root', max_length=254, blank=True)
     sonarr_season_folders = models.BooleanField('Sonarr Season Folders', default=False)
+    sonarr_monitored = models.BooleanField('Sonarr Show Monitored', default=False)
+    sonarr_search_missing = models.BooleanField('Sonarr Search Missing', default=False)
 
     # Model definitions
     def tv_suggestions_enabled(self):

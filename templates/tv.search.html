@@ -68,10 +68,10 @@ TV Search
                                     showsListIds.push(existingShow['tvdbId']);
                                 });
                                 
-                                var results_html = "";
+                                var resultsHtml = "";
                                 
                                 searchList.forEach(function(show){                                    
-                                    var show_html;
+                                    var showHtml;
                                     var showImageBannerUrl, showImagePosterUrl;
                                     var exists;
                                     
@@ -84,65 +84,65 @@ TV Search
                                     });
                                     
                                     if (showImagePosterUrl != null) {
-                                        var show_image = ('<img src="' + showImagePosterUrl + '" style=\'width:200px;\'  class="img-responsive"/>');
+                                        var showImage = ('<img src="' + showImagePosterUrl + '" style=\'width:200px;\'  class="img-responsive"/>');
                                     } else if (showImageBannerUrl != null) {
-                                        var show_image = ('<img src="' + showImageBannerUrl + '" style=\'width:200px;\'  class="img-responsive"/>');
+                                        var showImage = ('<img src="' + showImageBannerUrl + '" style=\'width:200px;\'  class="img-responsive"/>');
                                     }
                                     else {
                                         show_image = 'No Image';
                                     }
 
-                                    var existsUrl = "{% url 'apps:tv.search.exists' %}";
-                                    var requestUrl = "{% url 'apps:tv.search.add' %}";
+                                    var showName = show['title'];
                                     
-                                    if (showsListIds.includes(show['tvdbId'])) {
+                                    var showStatus = show['status'];
+                                    var showNetwork = show['network'];
+                                    var showRuntime = show['runtime'];
+                                    var showRating = show['ratings']['value'];
+                                    var showTvdb = show['tvdbId'];
+                                    var showImdb = show['imdbId'];
+                                    var showGenres = show['genres'].join(', ');
+
+                                    var showOverview = show['overview'];
+
+                                    var existsUrl = "{% url 'apps:tv.search.exists' %}";
+                                    var requestUrl = "{% url 'apps:tv.search.add' %}?tvdbId=" + showTvdb;
+
+                                    if (showsListIds.includes(showTvdb)) {
                                         exists = true;
-                                        var show_buttons = '<a href="' + existsUrl + '" id="button_exists" class="btn btn-info no-vertical-margin">Exists</a>';
+                                        var showButtons = '<a href="' + existsUrl + '" id="button_exists" class="btn btn-info no-vertical-margin">Exists</a>';
                                     } else {
                                         exists = false;
-                                        var show_buttons = '<a href="' + requestUrl + '" id="button_exists" class="btn btn-success no-vertical-margin">Request</a>';
+                                        var showButtons = '<a href="' + requestUrl + '" id="button_exists" class="btn btn-success no-vertical-margin">Request</a>';
                                     }
-
-                                    var show_name = show['title'];
                                     
-                                    var show_status = show['status'];
-                                    var show_network = show['network'];
-                                    var show_runtime = show['runtime'];
-                                    var show_rating = show['ratings']['value'];
-                                    var show_tvdb = show['tvdbId'];
-                                    var show_imdb = show['imdbId'];
-                                    var show_genres = show['genres'].join(', ');
-
-                                    var show_overview = show['overview'];
-                                    
-                                    show_html = '\
+                                    showHtml = '\
                                         <div class="panel panel-default"> \
                                             <div class="panel-body"> \
                                                 <div class="row"> \
-                                                    <div class="col-md-6"><h4 class="no-vertical-margin">' + show_name + '</h4></div> \
+                                                    <div class="col-md-6"><h4 class="no-vertical-margin">' + showName + '</h4></div> \
                                                     <div class="col-md-6"> \
                                                         <div class="pull-right"> \
-                                                            ' + show_buttons + ' \
+                                                            ' + showButtons + ' \
                                                         </div> \
                                                     </div> \
                                                 </div> \
                                                 <div class="row"> \
-                                                    <div class="col-md-2">' + show_image + '</div> \
+                                                    <div class="col-md-2">' + showImage + '</div> \
                                                     <div class="col-md-10"> \
                                                         <div class="row padding-t-md"> \
-                                                            <div class="col-md-2 text-capitalize">Status: ' + show_status + '</div> \
-                                                            <div class="col-md-2">Network: ' + show_network + '</div> \
-                                                            <div class="col-md-2">Runtime: ' + show_runtime + '</div> \
-                                                            <div class="col-md-2">Rating: ' + show_rating + '</div> \
-                                                            <div class="col-md-2">TVDB: ' + show_tvdb + '</div> \
-                                                            <div class="col-md-2">IMDB: ' + show_imdb + '</div> \
+                                                            <div class="col-md-2 text-capitalize">Status: ' + showStatus + '</div> \
+                                                            <div class="col-md-2">Network: ' + showNetwork + '</div> \
+                                                            <div class="col-md-2">Runtime: ' + showRuntime + '</div> \
+                                                            <div class="col-md-2">Rating: ' + showRating + '</div> \
+                                                            <div class="col-md-2">TVDB: ' + showTvdb + '</div> \
+                                                            <div class="col-md-2">IMDB: ' + showImdb + '</div> \
                                                         </div> \
                                                         <div class="row padding-t-sm"> \
-                                                            <div class="col-md-12">Genres: ' + show_genres + '</div> \
+                                                            <div class="col-md-12">Genres: ' + showGenres + '</div> \
                                                         </div> \
                                                         <div class="row padding-t-md"> \
                                                             <div class="col-md-12"> \
-                                                                ' + show_overview + ' \
+                                                                ' + showOverview + ' \
                                                             </div> \
                                                         </div> \
                                                     </div> \
@@ -150,10 +150,10 @@ TV Search
                                             </div> \
                                         </div>';
 
-                                    results_html += show_html;
+                                    resultsHtml += showHtml;
                                 });
 
-                                $('#search_results').html(results_html);
+                                $('#search_results').html(resultsHtml);
                             }
                             
                             $('#search').css('display','inline-block');
