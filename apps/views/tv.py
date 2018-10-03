@@ -41,15 +41,21 @@ def TvSearchRequestNew(request):
     tv_config_data = TvConfig.objects.all()[0]
     
     keyword = str(request.GET['search'])
-    if request.is_ajax():
+
+    if request.is_ajax() and keyword:
         search_result = SonarrLookupSeries(keyword)
         if search_result['success']:
+            response_data['success'] = True
             response_data['search_results'] = jsonpickle.encode(search_result['data'], unpicklable=False)
             shows_result = SonarrGetShows()
             if shows_result['success']:
                 response_data['shows_list'] = jsonpickle.encode(shows_result['data'], unpicklable=False)
 
-            return JsonResponse(response_data, safe=False)
+    else:
+        response_data['success'] = False
+
+    return JsonResponse(response_data, safe=False)
+
     
 
 @login_required
