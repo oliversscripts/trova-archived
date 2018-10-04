@@ -5,6 +5,7 @@ from apps.functions.sonarr import *
 
 # Models
 from apps.models import TvConfig
+from apps.models import TvRequest
 
 
 # Search
@@ -12,6 +13,7 @@ from apps.models import TvConfig
 def TvSearch(request):
     response_data = {}
     return render(request, 'tv.search.html', context=response_data)
+
 
 @login_required
 def TvSearchRequest(request):
@@ -34,19 +36,25 @@ def TvSearchRequest(request):
 
     return JsonResponse(response_data, safe=False)
 
+
 @login_required
 def TvSearchAdd(request):
     response_data = {}
     
     tvdbId = str(request.GET['tvdbId'])
     add_result = SonarrAddSeries(tvdbId)
+    sonarr_data = jsonpickle.decode(add_result['data'])
+    current_user = request.user
+    new_request = TvRequest(requested_by=current_user, sonarr_id=sonarr_data['id'])
+    new_request.save()
+    return HttpResponseRedirect(reverse('apps:tv.requests.detail', args=(new_request.request_id,)))
 
-    return JsonResponse(add_result, safe=False)
 
 @login_required
 def TvSearchExists(request):
     response_data = {}
     return JsonResponse(response_data, safe=False)
+
 
 
 # Requests
@@ -55,10 +63,15 @@ def TvRequests(request):
     response_data = {}
     return render(request, 'tv.requests.html', context=response_data)
 
+
 @login_required
-def TvRequestsDetail(request):
+def TvRequestsDetail(request, request_id):
     response_data = {}
+    request_data = TvRequest.objects.get(request_id=request_id)
+    response_data['data'] = request_data
+
     return render(request, 'tv.requests.detail.html', context=response_data)
+
 
 
 # Schedule

@@ -17,6 +17,6 @@ urlpatterns = [
     path('tv/search/exists/', views.TvSearchExists, name='tv.search.exists'),
 
     path('tv/requests/', views.TvRequests, name='tv.requests'),
-    path('tv/requests/<int:request_id>', views.TvRequestsDetail, name='tv.requests.detail'),
+    path('tv/requests/<int:request_id>/', views.TvRequestsDetail, name='tv.requests.detail'),
 
 ]

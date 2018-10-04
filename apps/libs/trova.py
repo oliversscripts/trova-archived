@@ -9,7 +9,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.forms import ModelForm
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import path, reverse
 
 
