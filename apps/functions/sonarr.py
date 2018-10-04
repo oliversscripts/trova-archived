@@ -52,6 +52,20 @@ def SonarrGetShows():
 
     return sonarrData
 
+def SonarrGetShow(sonarr_id):
+    sonarrData = {}
+    tv_config_data = TvConfig.objects.all()[0]
+
+    snr = SonarrAPI(SonarrGetUrl(), SonarrGetApiKey())
+
+    try:
+        sonarrData['data'] = json.dumps(snr.get_series_by_series_id(sonarr_id))
+        sonarrData['success'] = True
+    except:
+        sonarrData['success'] = False
+
+    return sonarrData
+
 def SonarrLookupSeries(search_words):
     sonarrData = {}
     tv_config_data = TvConfig.objects.all()[0]
