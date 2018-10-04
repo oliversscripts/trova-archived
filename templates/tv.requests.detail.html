@@ -16,11 +16,22 @@ TV Requests
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">My Requests</h3>
+        <h3 class="panel-title">{{ tv_request_data.title }}</h3>
     </div>
     <div class="panel-body">
-        {{ data.sonarr_id }}
-        {{ data.request_id }}
+        {{ tv_request_data.sonarr_id }}
+        {{ tv_request_data.request_id }}
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Response Data</h3>
+    </div>
+    <div class="panel-body">
+        {{ tv_request_data }}<br /><br />
+        {{ sonarr_data }}<br /><br />
+        {{ show_data }}<br /><br />
     </div>
 </div>
 

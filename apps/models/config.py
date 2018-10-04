@@ -14,16 +14,16 @@ class TvConfig(models.Model):
     suggestions_anticipated_enabled = models.BooleanField('Anticipated Shows', default=True)
 
     # Sonarr
-    sonarr_host = models.CharField('Sonarr IP or Hostname', max_length=254, blank=True, default='localhost')
-    sonarr_port = models.IntegerField('Sonarr Port', blank=True, null=True, default='8989')
-    sonarr_api_key = models.CharField('Sonarr API Key', max_length=254, blank=True)
-    sonarr_sub_directory = models.CharField('Sonarr URL Path', max_length=254, blank=True)
-    sonarr_ssl = models.BooleanField('Sonarr SSL Enabled', default=False)
-    sonarr_quality_profile = models.IntegerField('Sonarr Quality Profile', blank=True, null=True)
-    sonarr_tv_dir = models.CharField('Sonarr TV Folder Root', max_length=254, blank=True)
-    sonarr_season_folders = models.BooleanField('Sonarr Season Folders', default=False)
-    sonarr_monitored = models.BooleanField('Sonarr Show Monitored', default=False)
-    sonarr_search_missing = models.BooleanField('Sonarr Search Missing', default=False)
+    sonarr_host = models.CharField('IP or Hostname', max_length=254, blank=True, default='localhost')
+    sonarr_port = models.IntegerField('Port', blank=True, null=True, default='8989')
+    sonarr_api_key = models.CharField('API Key', max_length=254, blank=True)
+    sonarr_sub_directory = models.CharField('URL Path', max_length=254, blank=True)
+    sonarr_ssl = models.BooleanField('SSL Enabled', default=False)
+    sonarr_quality_profile = models.IntegerField('Quality Profile', blank=True, null=True)
+    sonarr_tv_dir = models.CharField('TV Media Root', max_length=254, blank=True)
+    sonarr_season_folders = models.BooleanField('Season Folders', default=False)
+    sonarr_monitored = models.BooleanField('Show Monitored', default=False)
+    sonarr_search_missing = models.BooleanField('Search Missing', default=False)
 
     # Model definitions
     def tv_suggestions_enabled(self):

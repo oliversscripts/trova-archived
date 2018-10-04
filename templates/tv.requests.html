@@ -14,16 +14,94 @@ TV Requests
 
 {% block page_content %}
 
+{% if success %}
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">My Requests</h3>
+        <h3 class="panel-title">Requests</h3>
     </div>
     <div class="panel-body">
-        
+        <table id="requests" class="table table-striped table-bordered" width="100%"></table>
     </div>
 </div>
 
+{% else %}
+Connection Failed
+{% endif %}
+
 <script>
+    $(document).ready(function() {
+        var requests_data = JSON.parse('{{ requests_data | escapejs }}');
+        var requests_list = requests_data['_result_cache'];
+        var sonarr_data = JSON.parse('{{ sonarr_data | escapejs }}');
+        
+        console.log(requests_list);
+        console.log(sonarr_data);
+        
+        var all_data = _.map(requests_list, function(obj) {
+            return _.assign(obj, _.find(sonarr_data, {id: obj.sonarr_id}));
+        });
+        
+        console.log(all_data);
+        
+        var table_data = [];
+        all_data.forEach(function(item){
+            var table_row = [];
+            table_row.push(item['request_id']);
+            table_row.push(item['title']);
+            table_row.push(_.capitalize(item['status']));
+            table_row.push(item['tvdbId']);
+            table_row.push(item['imdbId']);
+            table_row.push(item['episodeCount'] + '/' + item['totalEpisodeCount'])
+            table_data.push(table_row);
+        });
+        
+        var requests_table = $('#requests').DataTable({
+            data: table_data,
+            fixedHeader: {
+                header: true,
+                footer: true
+            },
+            columns: [
+                { title: "Id" },
+                { title: "Title" },
+                { title: "Status" },
+                { title: "TVDB" },
+                { title: "IMDB" },
+                { title: "Progress" },
+                {
+                    title: "Actions",
+                    data: null,
+                    defaultContent: ' \
+                    <div class="pull-right"> \
+                        <button id="request_delete" class="btn btn-xs btn-danger">Delete</button> \
+                        <button id="request_detail" class="btn btn-xs btn-info">Details</button> \
+                    </div> \
+                    '
+                }
+            ],
+            columnDefs: [
+                { "targets": 0, "visible": false},
+                { "width": "100px", "targets": -1 }
+            ]
+        });
+
+        $('#requests tbody').on('click', '#request_detail', function (e) {
+            var data = requests_table.row( $(this).parents('tr') ).data();
+            var request_detail_url = "{% url 'apps:tv.requests.detail' request_id=12345 %}".replace(/12345/, data[0].toString());
+            window.location = request_detail_url;
+            console.log(data);
+        });
+
+        $('#requests tbody').on('click', '#request_delete', function (e) {
+            var data = requests_table.row( $(this).parents('tr') ).data();
+            var request_delete_url = "{% url 'apps:tv.requests.delete' request_id=12345 %}".replace(/12345/, data[0].toString());
+            window.location = request_delete_url;
+            console.log(data);
+        });
+        
+        
+        
+    });
     
 </script>
 {% endblock %}
