@@ -55,7 +55,7 @@ def TvSearchAdd(request):
         messages.success(request, 'Request Added')
     except:
         messages.error(request, 'Failed to Add Request')
-        
+
     return HttpResponseRedirect(reverse('apps:tv.requests.detail', args = (new_request.request_id,)))
 
 
@@ -68,8 +68,11 @@ def TvSearchExists(request):
 
 # Requests
 @login_required
-def TvRequests(request):
+def TvRequestsAll(request):
     response_data = {}
+
+    tv_config_data = TvConfig.objects.all()[0]
+
     try:
         requests = TvRequest.objects.all()
         response_data['requests_data'] = jsonpickle.encode(requests, unpicklable=False)
@@ -83,6 +86,39 @@ def TvRequests(request):
             response_data['sonarr_data'] = sonarr_result['data']
     except:
         response_data['sonarr_data'] = ''
+
+    response_data['requests_persona'] = 'all'
+    response_data['sonarr_url'] = SonarrGetUrl()
+    response_data['sonarr_api_key'] = tv_config_data.sonarr_api_key
+
+    return render(request, 'tv.requests.html', context=response_data)
+
+
+@login_required
+def TvRequestsUser(request):
+    response_data = {}
+
+    current_user = request.user
+    tv_config_data = TvConfig.objects.all()[0]
+
+    try:
+        requests_data = TvRequest.objects.all()
+        requests_data_filtered = requests_data.filter(requested_by=current_user)
+        response_data['requests_data'] = jsonpickle.encode(requests_data, unpicklable=False)
+        response_data['success'] = True
+    except:
+        response_data['success'] = False
+
+    try:
+        sonarr_result = SonarrGetShows()
+        if sonarr_result['success']:
+            response_data['sonarr_data'] = sonarr_result['data']
+    except:
+        response_data['sonarr_data'] = ''
+
+    response_data['requests_persona'] = 'user'
+    response_data['sonarr_url'] = SonarrGetUrl()
+    response_data['sonarr_api_key'] = tv_config_data.sonarr_api_key
 
     return render(request, 'tv.requests.html', context=response_data)
 
@@ -116,9 +152,11 @@ def TvRequestsDetail(request, request_id):
 @login_required
 def TvRequestsDelete(request, request_id):
     response_data = {}
+
+    current_user = request.user
     
     tv_request_data = TvRequest.objects.get(request_id=request_id)
-    if tv_request_data.requested_by == request.user:
+    if tv_request_data.requested_by == current_user:
         try:
             TvRequest.objects.filter(request_id=request_id).delete()
             response_data['success'] = True
@@ -130,7 +168,7 @@ def TvRequestsDelete(request, request_id):
         response_data['success'] = False
         messages.warning(request, 'Permission Denied')
     
-    return HttpResponseRedirect(reverse('apps:tv.requests'))
+    return HttpResponseRedirect(reverse('apps:tv.requests.user'))
 
 
 

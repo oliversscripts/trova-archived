@@ -153,7 +153,7 @@ class SonarrAPI(object):
             'titleSlug': s_dict['titleSlug'],
             "addOptions": {
                           "ignoreEpisodesWithFiles": True,
-                          "ignoreEpisodesWithoutFiles": True,
+                          "ignoreEpisodesWithoutFiles": False,
                           "searchForMissingEpisodes": search_missing
                         }
                     }

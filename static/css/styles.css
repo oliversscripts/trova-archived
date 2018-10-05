@@ -26,3 +26,11 @@
 .page-action-buttons {
     margin-top: 15px;
 }
+
+.progress {
+    margin-bottom: 0px;
+}
+
+table.dataTable tbody td {
+    vertical-align: middle;
+  }
