@@ -138,3 +138,14 @@ def SonarrGetCalendarRange(start_date,end_date):
         sonarrData['success'] = False
 
     return sonarrData
+
+def SonarrGetImage(image_type, sonarr_id):    
+    url = SonarrGetUrl()
+    url += '/MediaCover/' + sonarr_id + '/' + image_type + '.jpg'
+
+    headers = {
+        'X-Api-Key': SonarrGetApiKey()
+    }
+    image_response = requests(url, headers=headers, timeout=3)
+
+    return HttpResponse(image_response, content_type="image/jpeg")

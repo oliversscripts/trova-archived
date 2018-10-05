@@ -89,7 +89,7 @@ def TvRequestsAll(request):
 
     response_data['requests_persona'] = 'all'
     response_data['sonarr_url'] = SonarrGetUrl()
-    response_data['sonarr_api_key'] = tv_config_data.sonarr_api_key
+    response_data['tv_config_data'] = jsonpickle.encode(tv_config_data, unpicklable=False)
 
     return render(request, 'tv.requests.html', context=response_data)
 
@@ -118,7 +118,7 @@ def TvRequestsUser(request):
 
     response_data['requests_persona'] = 'user'
     response_data['sonarr_url'] = SonarrGetUrl()
-    response_data['sonarr_api_key'] = tv_config_data.sonarr_api_key
+    response_data['tv_config_data'] = jsonpickle.encode(tv_config_data, unpicklable=False)
 
     return render(request, 'tv.requests.html', context=response_data)
 

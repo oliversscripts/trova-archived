@@ -38,7 +38,7 @@ Connection Failed
         var sonarr_data = JSON.parse('{{ sonarr_data | escapejs }}');
         var requests_persona = '{{ requests_persona }}';
         var sonarr_url =  '{{ sonarr_url }}';
-        var sonarr_api_key =  '{{ sonarr_api_key }}';
+        var tv_config_data =  JSON.parse('{{ tv_config_data | escapejs }}');
         
         var all_data = _.map(requests_list, function(obj) {
             return _.assign(obj, _.find(sonarr_data, {id: obj.sonarr_id}));
@@ -51,7 +51,8 @@ Connection Failed
             var table_row = [];
 
             var request_id  = item['request_id'];
-            var image       = '<img src="' + sonarr_url + item['images'][1]['url'] + '&api-key=' + sonarr_api_key + '" style="height:30px;"/>';
+            var sonarr_id  = item['sonarr_id'];
+            var image       = '<div class="image-loader-'+ sonarr_id + '"><i class="fa fa-spinner fa-spin" style="font-size:18px;"></i></div>';
             var title       = item['title'];
             var status      = _.capitalize(item['status']);
             var tvdbId      = item['tvdbId'];
@@ -59,6 +60,7 @@ Connection Failed
             var progress    = '<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + item['episodeFileCount'] + '" aria-valuemin="0" aria-valuemax="' + item['episodeCount'] + '" style="width: ' + item['episodeFileCount'] + '%;">' + item['episodeFileCount'] + ' / ' + item['episodeCount'] + '</div></div>'
             
             table_row.push(request_id);
+            table_row.push(sonarr_id);
             table_row.push(image);
             table_row.push(title);
             table_row.push(status);
@@ -66,6 +68,8 @@ Connection Failed
             table_row.push(imdbId);
             table_row.push(progress)
             table_data.push(table_row);
+
+            sonarr_get_image(tv_config_data, sonarr_url, sonarr_id, 'banner', 30);
         });
         
         if ( $.fn.DataTable.isDataTable('#requests') ) {
@@ -79,7 +83,8 @@ Connection Failed
                 footer: true
             },
             columns: [
-            { title: "Id" },
+            { title: "Request Id" },
+            { title: "Sonarr Id" },
             { title: "Banner" },
             { title: "Title" },
             { title: "Status" },
@@ -97,8 +102,8 @@ Connection Failed
             }
             ],
             columnDefs: [
-            { "targets": 0, "visible": false},
-            { "width": "140px", "targets": 1 },
+            { "targets": [0,1], "visible": false},
+            { "width": "140px", "targets": 2 },
             { "width": "90px", "targets": -1 }
             ]
         });
@@ -113,18 +118,19 @@ Connection Failed
         
         $('#requests tbody').on('click', '.request_detail', function (e) {
             var data = requests_table.row( $(this).parents('tr') ).data();
-            var request_detail_url = "{% url 'apps:tv.requests.detail' request_id=12345789 %}".replace(/12345789/, data[0].toString());
+            var request_detail_url = "{% url 'apps:tv.requests.detail' request_id=123456789 %}".replace(/123456789/, data[0].toString());
             window.location = request_detail_url;
             console.log(data);
         });
         
         $('#requests tbody').on('click', '.request_delete', function (e) {
             var data = requests_table.row( $(this).parents('tr') ).data();
-            var request_delete_url = "{% url 'apps:tv.requests.delete' request_id=12345789 %}".replace(/12345789/, data[0].toString());
+            var request_delete_url = "{% url 'apps:tv.requests.delete' request_id=123456789 %}".replace(/123456789/, data[0].toString());
             window.location = request_delete_url;
             console.log(data);
         });
         
+        //<img src="' + sonarr_get_image(tv_config_data, sonarr_url, sonarr_id, 'poster') + '" style="height:30px;" />
     });
     
 </script>
