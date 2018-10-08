@@ -5,6 +5,7 @@ class TvRequest(models.Model):
     sonarr_id = models.IntegerField(unique=True, db_index=True, blank=False)
     requested_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField('Show Name', max_length=254, blank=True)
+    request_date = models.DateTimeField('Requested Date', auto_now_add=True, max_length=254, blank=True)
     
 class MovieRequest(models.Model):
     request_id = models.AutoField('Request Id', primary_key=True)
