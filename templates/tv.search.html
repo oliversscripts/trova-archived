@@ -24,7 +24,6 @@ TV Search
         </div>
     </div>
 </div>
-
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">Results</h3>
@@ -54,96 +53,122 @@ TV Search
                         type: "GET",
                         url: "{% url 'apps:tv.search.request' %}?search=" + $("#search").val(),
                         success: function(data) {
-                            var searchList = JSON.parse(data['search_results']);
-                            var showsList = JSON.parse(data['shows_list']);
-                            console.log(searchList);
-                            console.log(showsList);
+                            var tv_config_data = JSON.parse(data['tv_config_data']);
+                            var sonarr_url = data['sonarr_url'];
+                            
+                            var search_results = JSON.parse(data['search_results']);
+                            var shows_list = JSON.parse(data['shows_list']);
+                            
+                            var requests_data = JSON.parse(data['requests_data']);
+                            var requests_list = requests_data['_result_cache'];
 
-                            if (JSON.parse(data['success'] != true) || searchList.length == 0){
+                            var search_and_shows = _.map(search_results, function(obj) {
+                                return _.assign(obj, _.find(shows_list, {tvdbId: obj.tvdbId}));
+                            });
+
+                            var search_and_shows_and_requests = _.map(search_and_shows, function(obj) {
+                                return _.assign(obj, _.find(requests_list, {sonarr_id: obj.id}));
+                            });
+                            
+                            //console.log(search_results);
+                            //console.log(shows_list);
+                            //console.log(requests_list);
+                            console.log(tv_config_data);
+                            console.log(search_and_shows_and_requests);
+
+                            if (JSON.parse(data['success'] != true) || search_results.length == 0){
                                 $('#search_results').html('Nothing Found');
                                 
                             } else {
-                                var showsListIds = []
-                                showsList.forEach(function(existingShow){
-                                    showsListIds.push(existingShow['tvdbId']);
+                                var shows_list_ids = []
+                                shows_list.forEach(function(existing_show){
+                                    shows_list_ids.push(existing_show['tvdbId']);
                                 });
                                 
-                                var resultsHtml = "";
-                                
-                                searchList.forEach(function(show){                                    
-                                    var showHtml;
-                                    var showImageBannerUrl, showImagePosterUrl;
+                                var results_html = "";
+                                var image_loaders = [];
+
+                                search_and_shows_and_requests.forEach(function(show){                                    
+                                    if (show['overview'] == null) {
+                                        return true;
+                                    }
+                                    var show_html;
                                     var exists;
+
+                                    var show_name = show['title'];
+
+                                    var sonarr_id = show['id'];
+                                    var request_id = show['request_id'];
                                     
-                                    show['images'].forEach(function(image){
-                                        if (image['coverType'] == 'poster') {
-                                            showImagePosterUrl = image['url'];
-                                        } else if (image['coverType'] == 'banner'){
-                                            showImageBannerUrl = image['url'];
-                                        }
-                                    });
+                                    var show_status = show['status'];
+                                    var show_network = show['network'];
+                                    var show_runtime = show['runtime'];
+                                    var show_rating = show['ratings']['value'];
+                                    var show_tvdb = show['tvdbId'];
+                                    var show_imdb = show['imdbId'];
+                                    var show_genres = show['genres'].join(', ');
+
+                                    var show_overview = show['overview'];
                                     
-                                    if (showImagePosterUrl != null) {
-                                        var showImage = ('<img src="' + showImagePosterUrl + '" style=\'width:200px;\'  class="img-responsive"/>');
-                                    } else if (showImageBannerUrl != null) {
-                                        var showImage = ('<img src="' + showImageBannerUrl + '" style=\'width:200px;\'  class="img-responsive"/>');
+                                    var show_image = 'No Image';
+
+                                    if ('id' in show){
+                                        show_image = '<div class="image-loader-'+ sonarr_id + '"><i class="fa fa-spinner fa-spin" style="font-size:18px;"></i></div>';
+                                        image_loaders.push({'tv_config_data':tv_config_data, 'sonarr_url':sonarr_url, 'sonarr_id':sonarr_id, 'type':'poster', 'width':0});
+                                    } else {
+                                        show['images'].forEach(function(image){
+                                            if (image['coverType'] == 'poster') {
+                                                show_image = '<img src="' +  image['url'] + '" class="img-responsive"/>';
+                                            } else if (image['coverType'] == 'banner'){
+                                                show_image = '<img src="' +  image['url'] + '" class="img-responsive"/>';
+                                            } else {
+                                                
+                                            }
+                                        });
                                     }
-                                    else {
-                                        show_image = 'No Image';
-                                    }
 
-                                    var showName = show['title'];
-                                    
-                                    var showStatus = show['status'];
-                                    var showNetwork = show['network'];
-                                    var showRuntime = show['runtime'];
-                                    var showRating = show['ratings']['value'];
-                                    var showTvdb = show['tvdbId'];
-                                    var showImdb = show['imdbId'];
-                                    var showGenres = show['genres'].join(', ');
 
-                                    var showOverview = show['overview'];
-
-                                    var existsUrl = "{% url 'apps:tv.search.exists' %}";
-                                    var requestUrl = "{% url 'apps:tv.search.add' %}?tvdbId=" + showTvdb;
-
-                                    if (showsListIds.includes(showTvdb)) {
-                                        exists = true;
-                                        var showButtons = '<a href="' + existsUrl + '" id="button_exists" class="btn btn-info no-vertical-margin">Exists</a>';
+                                    if (request_id != null) {
+                                        var exists_requests_url = "{% url 'apps:tv.requests.detail' request_id=123456789 %}".replace(/123456789/, request_id.toString());    
+                                        var show_buttons = '<a href="' + exists_requests_url + '" id="button_exists" class="btn btn-default no-vertical-margin">Already Requested</a>';
+                                    } else if (sonarr_id != null ) {
+                                        var exists_sonarr_url = "{% url 'apps:tv.search.exists' %}?sonarr_id=" + sonarr_id;
+                                        var show_buttons = '<a href="' + exists_sonarr_url + '" id="button_exists" class="btn btn-info no-vertical-margin">Exists in Sonarr</a>';
                                     } else {
                                         exists = false;
-                                        var showButtons = '<a href="' + requestUrl + '" id="button_exists" class="btn btn-success no-vertical-margin">Request</a>';
+                                        var requests_url = "{% url 'apps:tv.search.add' %}?tvdbId=" + show_tvdb;
+                                        var show_buttons = '<a href="' + requests_url + '" id="button_exists" class="btn btn-success no-vertical-margin">New Request</a>';
                                     }
                                     
-                                    showHtml = '\
+                                    show_html = '\
                                         <div class="panel panel-default"> \
                                             <div class="panel-body"> \
                                                 <div class="row"> \
-                                                    <div class="col-md-6"><h4 class="no-vertical-margin">' + showName + '</h4></div> \
+                                                    <div class="col-md-6"><h4 class="no-vertical-margin">' + show_name + '</h4></div> \
                                                     <div class="col-md-6"> \
                                                         <div class="pull-right"> \
-                                                            ' + showButtons + ' \
+                                                            ' + show_buttons + ' \
                                                         </div> \
                                                     </div> \
                                                 </div> \
                                                 <div class="row"> \
-                                                    <div class="col-md-2">' + showImage + '</div> \
+                                                    <div class="col-md-2">' + show_image + '</div> \
                                                     <div class="col-md-10"> \
                                                         <div class="row padding-t-md"> \
-                                                            <div class="col-md-2 text-capitalize">Status: ' + showStatus + '</div> \
-                                                            <div class="col-md-2">Network: ' + showNetwork + '</div> \
-                                                            <div class="col-md-2">Runtime: ' + showRuntime + '</div> \
-                                                            <div class="col-md-2">Rating: ' + showRating + '</div> \
-                                                            <div class="col-md-2">TVDB: ' + showTvdb + '</div> \
-                                                            <div class="col-md-2">IMDB: ' + showImdb + '</div> \
+                                                            <div class="col-md-2 text-capitalize">Status: ' + show_status + '</div> \
+                                                            <div class="col-md-2">Network: ' + show_network + '</div> \
+                                                            <div class="col-md-2">Runtime: ' + show_runtime + '</div> \
+                                                            <div class="col-md-2">Rating: ' + show_rating + '</div> \
+                                                            <div class="col-md-2">TVDB: ' + show_tvdb + '</div> \
+                                                            <div class="col-md-2">IMDB: ' + show_imdb + '</div> \
                                                         </div> \
                                                         <div class="row padding-t-sm"> \
-                                                            <div class="col-md-12">Genres: ' + showGenres + '</div> \
+                                                            <div class="col-md-12">Genres: ' + show_genres + '</div> \
                                                         </div> \
                                                         <div class="row padding-t-md"> \
                                                             <div class="col-md-12"> \
                                                                 Overview: <br /> \
-                                                                ' + showOverview + ' \
+                                                                ' + show_overview + ' \
                                                             </div> \
                                                         </div> \
                                                     </div> \
@@ -151,14 +176,19 @@ TV Search
                                             </div> \
                                         </div>';
 
-                                    resultsHtml += showHtml;
+                                    results_html += show_html;
                                 });
-
-                                $('#search_results').html(resultsHtml);
+                                
+                                $('#search_results').html(results_html);
+                                
+                                image_loaders.forEach(function(image_loader){
+                                    sonarr_get_image(image_loader['tv_config_data'], image_loader['sonarr_url'], image_loader['sonarr_id'], image_loader['type'], image_loader['width']);
+                                });
                             }
                             
                             $('#search').css('display','inline-block');
                             $('#spinner').css('display','none');
+                            
                         }
                     });
                 }, 1000 );

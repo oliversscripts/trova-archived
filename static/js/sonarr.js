@@ -20,7 +20,7 @@ function arrayBufferToBase64(buffer) {
     return window.btoa(binary);
 };
 
-function sonarr_get_image(tv_config_data, sonarr_url, sonarr_id, image_type, height) {
+function sonarr_get_image(tv_config_data, sonarr_url, sonarr_id, image_type, width) {
     var url = sonarr_url + '/MediaCover/' + sonarr_id + '/' + image_type + '.jpg';
 
     var headers = new Headers({'X-Api-Key': tv_config_data['sonarr_api_key']});
@@ -39,9 +39,13 @@ function sonarr_get_image(tv_config_data, sonarr_url, sonarr_id, image_type, hei
 
             var newSrc = base64Flag + imageStr;
             var newImage = new Image();
+            //newImage.id = 'show_image' + sonarr_id;
             newImage.src = newSrc;
-            newImage.height = height;
-            $('.image-loader-'+sonarr_id).replaceWith(newImage);
+            if (width > 0) {
+                newImage.width = width;
+            }
+            $('.image-loader-'+sonarr_id).html(newImage);
+            $('.image-loader-'+sonarr_id).find('img').addClass('img-responsive');
         });
     });
 }

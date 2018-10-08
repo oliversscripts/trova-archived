@@ -17,6 +17,9 @@
     
     <title>{% block title %}{% endblock %}</title>
     
+    <!-- jQuery Ui CSS -->
+    <link href="{% static 'vendor/jquery-ui/jquery-ui.min.css' %}" rel="stylesheet">
+    
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     
@@ -28,6 +31,10 @@
 
     <!-- MetisMenu CSS -->
     <link href="{% static 'vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+
+    <!-- FullCalendar CSS -->
+    <link href="{% static 'vendor/fullcalendar/fullcalendar.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/fullcalendar/fullcalendar.print.min.css' %}" media="print" rel="stylesheet">
     
     <!-- Custom CSS -->
     <link href="{% static 'vendor/sb-admin-2/css/sb-admin-2.css' %}" rel="stylesheet">
@@ -47,8 +54,11 @@
     </head>
     
     <body>
-        <!-- jQuery -->
+        <!-- jQuery JavaScript -->
         <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+
+        <!-- jQuery Ui JavaScript -->
+        <script src="{% static 'vendor/jquery-ui/jquery-ui.min.js' %}"></script>
         
         <!-- Bootstrap Core JavaScript -->
         <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
@@ -59,10 +69,14 @@
         <!-- Datatable Javascript -->
         <script src="{% static 'vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
         
-        <!-- Metis Menu Plugin JavaScript -->
+        <!-- Metis Menu JavaScript -->
         <script src="{% static 'vendor/metisMenu/metisMenu.min.js' %}"></script>
 
-        <!-- Lodash Menu Plugin JavaScript -->
+        <!-- Full Calendar JavaScript -->
+        <script src="{% static 'vendor/fullcalendar/lib/moment.min.js' %}"></script>
+        <script src="{% static 'vendor/fullcalendar/fullcalendar.min.js' %}"></script>
+
+        <!-- Lodash Menu JavaScript -->
         <script src="{% static 'vendor/lodash/lodash.min.js' %}"></script>
         
         <!-- Custom Theme JavaScript -->

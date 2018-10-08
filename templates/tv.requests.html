@@ -40,14 +40,14 @@ Connection Failed
         var sonarr_url =  '{{ sonarr_url }}';
         var tv_config_data =  JSON.parse('{{ tv_config_data | escapejs }}');
         
-        var all_data = _.map(requests_list, function(obj) {
+        var combined_sonnar_requests = _.map(requests_list, function(obj) {
             return _.assign(obj, _.find(sonarr_data, {id: obj.sonarr_id}));
         });
         
-        console.log(all_data);
+        console.log(combined_sonnar_requests);
         
         var table_data = [];
-        all_data.forEach(function(item){
+        combined_sonnar_requests.forEach(function(item){
             var table_row = [];
 
             var request_id  = item['request_id'];
@@ -69,7 +69,7 @@ Connection Failed
             table_row.push(progress)
             table_data.push(table_row);
 
-            sonarr_get_image(tv_config_data, sonarr_url, sonarr_id, 'banner', 30);
+            sonarr_get_image(tv_config_data, sonarr_url, sonarr_id, 'banner', 150);
         });
         
         if ( $.fn.DataTable.isDataTable('#requests') ) {

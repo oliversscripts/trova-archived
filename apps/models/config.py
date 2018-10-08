@@ -24,6 +24,7 @@ class TvConfig(models.Model):
     sonarr_season_folders = models.BooleanField('Season Folders', default=False)
     sonarr_monitored = models.BooleanField('Show Monitored', default=False)
     sonarr_search_missing = models.BooleanField('Search Missing', default=False)
+    sonarr_timezone = models.CharField('Timezone Sonarr is Hosted', max_length=254, blank=True)
 
     # Model definitions
     def tv_suggestions_enabled(self):
