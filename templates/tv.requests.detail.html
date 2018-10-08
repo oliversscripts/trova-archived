@@ -19,8 +19,9 @@ TV Requests
         <h3 class="panel-title">{{ tv_request_data.title }}</h3>
     </div>
     <div class="panel-body">
-        {{ tv_request_data.sonarr_id }}
-        {{ tv_request_data.request_id }}
+        <div class="row">
+            <div class="col-md-12"><div class="image-loader"><i class="fa fa-spinner fa-spin" style="font-size:18px;"></i></div></div>
+          </div>
     </div>
 </div>
 
@@ -29,14 +30,25 @@ TV Requests
         <h3 class="panel-title">Response Data</h3>
     </div>
     <div class="panel-body">
-        {{ tv_request_data }}<br /><br />
-        {{ sonarr_data }}<br /><br />
-        {{ show_data }}<br /><br />
+        {{ tv_config_json }} <br /><br />
+        {{ tv_request_json }}
     </div>
 </div>
 
 <script>
-    
+    $(document).ready(function() {
+        $('#menu-tv').addClass('in');
+        $('#menu-tv-requests').addClass('active');
+
+        var tv_request_data = JSON.parse('{{ tv_config_json | escapejs }}')
+        var tv_request_data = JSON.parse('{{ tv_request_json | escapejs }}')
+        console.log(tv_request_data)
+
+        //var sonarr_id = '{{ tv_request_data.id }}';
+        //sonarr_get_image(tv_config_data, sonarr_url, sonarr_id, 'banner', 0);
+
+    });
+
 </script>
 {% endblock %}
 
