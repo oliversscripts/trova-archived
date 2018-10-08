@@ -9,10 +9,10 @@
                 <a href="#"><i class="fa fa-book fa-fw"></i> Books<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">Search</a>
+                        <a href="#"><i class="fa fa-book fa-fw"></i> Search</a>
                     </li>
                     <li>
-                        <a href="#">Requests</a>
+                        <a href="#"><i class="fa fa-book fa-fw"></i> Requests</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
@@ -21,16 +21,16 @@
                 <a href="#"><i class="fa fa-film fa-fw"></i> Movies<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">Requests</a>
+                        <a href="#"><i class="fa fa-film fa-fw"></i> Requests</a>
                     </li>
                     <li>
-                        <a href="#">Scheduled</a>
+                        <a href="#"><i class="fa fa-film fa-fw"></i> Scheduled</a>
                     </li>
                     <li>
-                        <a href="#">Search</a>
+                        <a href="#"><i class="fa fa-film fa-fw"></i> Search</a>
                     </li>
                     <li>
-                        <a href="#">Suggestions</a>
+                        <a href="#"><i class="fa fa-film fa-fw"></i> Suggestions</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
@@ -39,10 +39,10 @@
                 <a href="#"><i class="fa fa-music fa-fw"></i> Music<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">Search</a>
+                        <a href="#"><i class="fa fa-music fa-fw"></i> Search</a>
                     </li>
                     <li>
-                        <a href="#">Requests</a>
+                        <a href="#"><i class="fa fa-music fa-fw"></i> Requests</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
@@ -50,53 +50,62 @@
             {% if all_config_data.tv_config.tv_enabled %}
             <li>
                 <a href="#"><i class="fa fa-tv fa-fw"></i> TV<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
+                <ul class="nav nav-second-level" id="menu-tv">
                     <li>
-                        <a href="{% url 'apps:tv.requests.user' %}">My Requests</a>
+                        <a href="{% url 'apps:tv.requests' %}" id="menu-tv-requests"><i class="fa fa-list-ul fa-fw"></i> Requests</a>
                     </li>
                     <li>
-                        <a href="{% url 'apps:tv.requests.all' %}">All Requests</a>
+                        <a href="{% url 'apps:tv.schedule' %}"><i class="fa fa-calendar fa-fw"></i> Schedule</a>
                     </li>
                     <li>
-                        <a href="{% url 'apps:tv.schedule' %}">Schedule</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'apps:tv.search' %}">Search</a>
+                        <a href="{% url 'apps:tv.search' %}"><i class="fa fa-search fa-fw"></i> Search</a>
                     </li>
                     {% if all_config_data.tv_config.tv_suggestions_enabled %}
                     <li>
-                        <a href="#">Suggestions</a>
+                        <a href="#"><i class="fa fa-search-plus fa-fw"></i> Suggestions</a>
                     </li>
                     {% endif %}
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
             {% endif %}
-            {% if user.is_superuser %}
+            {% if user.is_manager %}
+            <li class="divider"></li>
+            <li>
+                <a href="#"><i class="fa fa-list fa-fw"></i> Manager<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> Issues</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> Requests</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> Users</a>
+                    </li>                   
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            {% endif %}
+            {% if user.is_admin %}
             <li class="divider"></li>
             <li>
                 <a href="#"><i class="fa fa-wrench fa-fw"></i> Config<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">General</a>
+                        <a href="#"><i class="fa fa-server fa-fw"></i> Media Server</a>
                     </li>
                     <li>
-                        <a href="#">Users</a>
+                        <a href="#"><i class="fa fa-book fa-fw"></i> Books</a>
                     </li>
                     <li>
-                        <a href="#">Media Server</a>
+                        <a href="#"><i class="fa fa-film fa-fw"></i> Movies</a>
                     </li>
                     <li>
-                        <a href="#">Books</a>
+                        <a href="#"><i class="fa fa-music fa-fw"></i> Music</a>
                     </li>
                     <li>
-                        <a href="#">Movies</a>
-                    </li>
-                    <li>
-                        <a href="#">Music</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'apps:config.tv' %}">TV</a>
+                        <a href="{% url 'apps:config.tv' %}"><i class="fa fa-tv fa-fw"></i> TV</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
