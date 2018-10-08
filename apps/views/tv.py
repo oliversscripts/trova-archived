@@ -98,7 +98,7 @@ def TvSearchExists(request):
 
 # Requests
 @login_required
-def TvRequestsAll(request):
+def TvRequests(request):
     response_data = {}
 
     tv_config_data = TvConfig.objects.all()[0]
@@ -117,36 +117,6 @@ def TvRequestsAll(request):
     except:
         response_data['sonarr_data'] = ''
 
-    response_data['requests_persona'] = 'all'
-    response_data['sonarr_url'] = SonarrGetUrl()
-    response_data['tv_config_data'] = jsonpickle.encode(tv_config_data, unpicklable=False)
-
-    return render(request, 'tv.requests.html', context=response_data)
-
-
-@login_required
-def TvRequestsUser(request):
-    response_data = {}
-
-    current_user = request.user
-    tv_config_data = TvConfig.objects.all()[0]
-
-    try:
-        requests_data = TvRequest.objects.all()
-        requests_data_filtered = requests_data.filter(requested_by=current_user)
-        response_data['requests_data'] = jsonpickle.encode(requests_data, unpicklable=False)
-        response_data['success'] = True
-    except:
-        response_data['success'] = False
-
-    try:
-        sonarr_result = SonarrGetShows()
-        if sonarr_result['success']:
-            response_data['sonarr_data'] = sonarr_result['data']
-    except:
-        response_data['sonarr_data'] = ''
-
-    response_data['requests_persona'] = 'user'
     response_data['sonarr_url'] = SonarrGetUrl()
     response_data['tv_config_data'] = jsonpickle.encode(tv_config_data, unpicklable=False)
 
@@ -156,28 +126,21 @@ def TvRequestsUser(request):
 @login_required
 def TvRequestsDetail(request, request_id):
     response_data = {}
-    tv_request_data = TvRequest.objects.get(request_id=request_id)
-    
-    try:
-        sonarr_json = SonarrGetShow(tv_request_data.sonarr_id)
-        sonarr_data = jsonpickle.decode(sonarr_json['data'])
-    except:
-        sonarr_data = 'Request removed from Sonarr'
 
-    if sonarr_json['success']:
-        try:
-            show_json = SonarrLookupSeries("tvdb:" + str(sonarr_data['tvdbId']))
-            show_data = jsonpickle.decode(show_json['data'])
-        except:
-            show_data = 'Problem with Sonarr'
-    else:
-        show_data = ''
-    
+    tv_config_data = TvConfig.objects.all()[0]
+    tv_config_json = jsonpickle.encode(tv_config_data, unpicklable=False)
+
+    tv_request_data = TvRequest.objects.get(request_id=request_id)
+    tv_request_json = jsonpickle.encode(tv_request_data, unpicklable=False)
+
+    response_data['tv_config_data'] = tv_config_data
+    response_data['tv_config_json'] = tv_config_json
+
     response_data['tv_request_data'] = tv_request_data
-    response_data['show_data'] = show_data
-    response_data['sonarr_data'] = sonarr_data
+    response_data['tv_request_json'] = tv_request_json
 
     return render(request, 'tv.requests.detail.html', context=response_data)
+
 
 @login_required
 def TvRequestsDelete(request, request_id):
